@@ -152,7 +152,7 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
             <div className="calendly-placeholder">
               <div className="calendly-placeholder-icon">⌖</div>
               <div>Espacio reservado para Calendly</div>
-              <div className="tiny">Una vez aprobado el proyecto, aca se embebe el calendario real</div>
+              <div className="tiny">Una vez aprobado el proyecto, aca se pone el calendario real</div>
             </div>
             <p className="cta-agendar-caption">Atencion personalizada en horario comercial de Argentina (GMT-3).</p>
           </div>
