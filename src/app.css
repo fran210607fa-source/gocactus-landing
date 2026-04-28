@@ -821,6 +821,38 @@ section {
   transform: translateY(0);
 }
 
+/* ── iPad / Tablet (≤ 1024px) ── */
+@media (max-width: 1024px) {
+  .equipo-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .camino-etapas {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .camino-etapas::before {
+    display: none;
+  }
+
+  .proceso-pasos {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── Mobile (≤ 768px) ── */
 @media (max-width: 768px) {
   .nav {
     height: 56px;
@@ -830,10 +862,19 @@ section {
     font-size: 18px;
   }
 
+  .nav-inner {
+    padding: 0 16px;
+  }
+
+  /* Hero */
   .hero {
     min-height: 90vh;
-    padding-top: 100px;
+    padding-top: 90px;
     padding-bottom: 80px;
+  }
+
+  .hero-content {
+    max-width: 100%;
   }
 
   .hero-ctas {
@@ -841,21 +882,28 @@ section {
     width: 100%;
   }
 
-  .hero-ctas .btn {
+  .hero-ctas .border-glow-card {
     width: 100%;
   }
 
-  .camino-etapas {
-    grid-template-columns: 1fr;
-    gap: 64px;
+  .hero-ctas .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 
-  .camino-etapas::before {
+  .hero-scroll {
     display: none;
   }
 
+  /* Camino */
+  .camino-etapas {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
   .etapa {
-    padding-left: 24px;
+    padding-left: 20px;
     border-left: 2px solid var(--accent-warm);
   }
 
@@ -863,34 +911,89 @@ section {
     font-size: 72px;
   }
 
+  /* Equipo */
   .equipo-grid {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
 
   .equipo-card {
-    padding: 32px;
+    padding: 24px;
   }
 
+  /* Proceso */
   .proceso-pasos {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
 
+  /* Newsletter */
   .newsletter-form {
     flex-direction: column;
+  }
+
+  .newsletter-form input {
+    width: 100%;
+  }
+
+  .newsletter-form .border-glow-card {
+    width: 100%;
   }
 
   .newsletter-form .btn {
     width: 100%;
   }
 
+  /* Footer */
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
 
-  .hero-scroll {
-    display: none;
+  .footer {
+    padding: 64px 0 40px;
+  }
+
+  /* Stepper */
+  .outer-container {
+    padding: 0;
+    aspect-ratio: unset !important;
+  }
+
+  .step-circle-container {
+    max-width: 100%;
+    border-radius: 1rem;
+  }
+
+  .step-default h2 {
+    font-size: 1.3rem;
+  }
+
+  /* Contenedores */
+  .container,
+  .container-editorial,
+  .container-narrow {
+    padding: 0 16px;
+  }
+
+  section {
+    padding: clamp(60px, 10vw, 100px) 0;
+  }
+}
+
+/* ── Small Mobile (≤ 480px) ── */
+@media (max-width: 480px) {
+  .etapa-numero {
+    font-size: 56px;
+  }
+
+  .step-indicator-row {
+    padding: 1.25rem;
+  }
+
+  .step-default,
+  .footer-container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 }

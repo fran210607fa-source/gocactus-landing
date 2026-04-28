@@ -61,7 +61,7 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
             <div className="etapa fade-in">
               <span className="etapa-numero">01</span>
               <div className="etapa-titulo">Despertar</div>
-              <p className="etapa-pregunta">"Que hago con mi plata?"</p>
+              <p className="etapa-pregunta">"¿Que hago con mi plata?"</p>
               <p className="etapa-descripcion">Entender que esta pasando con tu dinero hoy.</p>
             </div>
             <div className="etapa fade-in">
@@ -163,7 +163,7 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
         <div className="container-narrow">
           <div className="fade-in">
             <span className="overline subtle">NEWSLETTER</span>
-            <h2 className="h2">Todavia no estas listo? Acompanamos tu camino.</h2>
+            <h2 className="h2">¿Todavia no estas listo? Acompanamos tu camino.</h2>
             <p className="newsletter-subtitle">Una idea financiera bien pensada, cada semana. Sin spam. Sin ruido.</p>
             <form className="newsletter-form" onSubmit={onNewsletterSubmit}>
               <input type="email" placeholder="tu@email.com" required />
@@ -180,7 +180,7 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
         <div className="container-narrow">
           <div className="fade-in">
             <span className="overline green">CONTACTO</span>
-            <h2 className="h2">Tenes una consulta especifica?</h2>
+            <h2 className="h2">¿Tenes una consulta especifica?</h2>
             <p className="contacto-subtitle">Contanos que necesitas y te respondemos en 48 horas.</p>
           </div>
           <Stepper
