@@ -23,7 +23,10 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
             <div className="hero-overline overline green">FORMACION FINANCIERA PARA NUESTRA GENERACION</div>
             <h1 className="h1 hero-title">El capital tiene una nueva generacion.</h1>
             <p className="body-lg hero-subtitle">
-              Aprende a manejar tu plata con el respaldo de asesores financieros del mercado argentino. Agenda tu primera reunion sin costo.
+              Creciste viendo plata que se evapora.<br /><br />
+              Sueldos que no alcanzan. Ahorros que desaparecen. Sueños que esperan. Y en el medio, nadie te explicó qué hacer. Solo te dijeron que te cuides, que ahorres, que no arriesgues.<br /><br />
+              Esa educación ya no sirve.<br /><br />
+              GOcactus es la nueva regla del juego.
             </p>
             <div className="hero-ctas">
               <BorderGlow borderRadius={8} glowRadius={24} edgeSensitivity={20}>
