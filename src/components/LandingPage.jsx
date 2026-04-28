@@ -23,10 +23,7 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
             <div className="hero-overline overline green">FORMACION FINANCIERA PARA NUESTRA GENERACION</div>
             <h1 className="h1 hero-title">El capital tiene una nueva generacion.</h1>
             <p className="body-lg hero-subtitle">
-              Creciste viendo plata que se evapora.<br /><br />
-              Sueldos que no alcanzan. Ahorros que desaparecen. Sueños que esperan. Y en el medio, nadie te explicó qué hacer. Solo te dijeron que te cuides, que ahorres, que no arriesgues.<br /><br />
-              Esa educación ya no sirve.<br /><br />
-              GOcactus es la nueva regla del juego.
+              Aprende a manejar tu plata con el respaldo de asesores financieros del mercado argentino. Agenda tu primera reunion sin costo.
             </p>
             <div className="hero-ctas">
               <BorderGlow borderRadius={8} glowRadius={24} edgeSensitivity={20}>
@@ -47,10 +44,10 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
       <section className="problema">
         <div className="container-editorial">
           <div className="problema-text fade-in">
-            <p>No te enseñaron a manejar tu plata. A nosotros tampoco.</p>
-            <p>Crecimos viendo a nuestros padres pelearla con inflación, corralitos y sueldos que no alcanzaban. Sabemos que ahorrar en pesos es perder, pero nadie nos explicó qué hacer en su lugar.</p>
-
-            <p className="highlight"><strong>GOcactus existe para cambiar eso.</strong></p>
+            <p>Creciste viendo plata que se evapora.</p>
+            <p>Sueldos que no alcanzan. Ahorros que desaparecen. Sueños que esperan. Y en el medio, nadie te explicó qué hacer. Solo te dijeron que te cuides, que ahorres, que no arriesgues.</p>
+            <p>Esa educación ya no sirve.</p>
+            <p className="highlight"><strong>GOcactus es la nueva regla del juego.</strong></p>
           </div>
         </div>
       </section>
