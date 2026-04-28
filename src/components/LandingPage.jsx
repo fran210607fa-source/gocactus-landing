@@ -229,8 +229,8 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
               </a>
               <p className="footer-tagline">El patrimonio de nuestra generación.</p>
               <div className="footer-socials">
-                <a href="#" className="footer-social-icon" title="Instagram">IG</a>
-                <a href="#" className="footer-social-icon" title="TikTok">TK</a>
+                <a href="https://www.instagram.com/cactus.wealth/" target="_blank" rel="noopener noreferrer" className="footer-social-icon" title="Instagram">IG</a>
+                <a href="https://www.tiktok.com/@cactus.wealth" target="_blank" rel="noopener noreferrer" className="footer-social-icon" title="TikTok">TK</a>
               </div>
             </div>
             <div className="footer-col">
