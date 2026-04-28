@@ -44,8 +44,8 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
       <section className="problema">
         <div className="container-editorial">
           <div className="problema-text fade-in">
-            <p><em>No te ensenaron a manejar tu plata. A nosotros tampoco.</em></p>
-            <p><em>Crecimos viendo a nuestros padres pelearla con inflacion, corralitos y sueldos que no alcanzan. Sabemos que ahorrar en pesos es perder, pero nadie nos explico que hacer en su lugar.</em></p>
+            <p>No te enseñaron a manejar tu plata. A nosotros tampoco.</p>
+            <p>Crecimos viendo a nuestros padres pelearla con inflación, corralitos y sueldos que no alcanzaban. Sabemos que ahorrar en pesos es perder, pero nadie nos explicó qué hacer en su lugar.</p>
             <p className="highlight"><strong>GOcactus existe para cambiar eso.</strong></p>
           </div>
         </div>
@@ -61,13 +61,13 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
             <div className="etapa fade-in">
               <span className="etapa-numero">01</span>
               <div className="etapa-titulo">Despertar</div>
-              <p className="etapa-pregunta">"¿Que hago con mi plata?"</p>
+              <p className="etapa-pregunta">"¿Qué hago con mi plata?"</p>
               <p className="etapa-descripcion">Entender que esta pasando con tu dinero hoy.</p>
             </div>
             <div className="etapa fade-in">
               <span className="etapa-numero">02</span>
               <div className="etapa-titulo">Formacion</div>
-              <p className="etapa-pregunta">"Ya se como funciona."</p>
+              <p className="etapa-pregunta">"Ya sé cómo funciona."</p>
               <p className="etapa-descripcion">Aprender los conceptos clave para moverte con criterio.</p>
             </div>
             <div className="etapa fade-in">
@@ -80,6 +80,7 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
           <p className="camino-footer fade-in">
             Este recorrido se construye en Instagram. La web es el puente al siguiente paso.
           </p>
+
         </div>
       </section>
 
@@ -225,7 +226,7 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
                 <LogoMark />
                 <span className="nav-logo-text">GOcactus</span>
               </a>
-              <p className="footer-tagline">El patrimonio de nuestra generacion.</p>
+              <p className="footer-tagline">El patrimonio de nuestra generación.</p>
               <div className="footer-socials">
                 <a href="#" className="footer-social-icon" title="Instagram">IG</a>
                 <a href="#" className="footer-social-icon" title="TikTok">TK</a>
