@@ -368,8 +368,9 @@ section {
   left: 10%;
   right: 10%;
   height: 1px;
-  background: var(--accent-warm);
-  opacity: 0.3;
+  background: none;
+  border-top: 1px dashed var(--accent-warm);
+  opacity: 0.5;
 }
 
 .etapa {
