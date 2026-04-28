@@ -163,7 +163,7 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
         <div className="container-narrow">
           <div className="fade-in">
             <span className="overline subtle">NEWSLETTER</span>
-            <h2 className="h2">¿Todavia no estas listo? Acompanamos tu camino.</h2>
+            <h2 className="h2">¿Todavia no estas listo?<br />Acompanamos tu camino.</h2>
             <p className="newsletter-subtitle">Una idea financiera bien pensada, cada semana. Sin spam. Sin ruido.</p>
             <form className="newsletter-form" onSubmit={onNewsletterSubmit}>
               <input type="email" placeholder="tu@email.com" required />
