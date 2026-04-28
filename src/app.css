@@ -317,12 +317,13 @@ section {
 }
 
 .problema-text {
-  font-family: var(--font-script);
-  font-style: italic;
-  font-size: clamp(26px, 3.8vw, 42px);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(22px, 3vw, 34px);
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.9);
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
 }
 
 .problema-text p {
@@ -395,9 +396,10 @@ section {
 }
 
 .etapa-pregunta {
-  font-family: var(--font-script);
-  font-style: italic;
-  font-size: clamp(22px, 2.2vw, 30px);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 600;
+  font-size: clamp(20px, 2vw, 26px);
   line-height: 1.4;
   color: var(--text-on-dark);
   margin-bottom: 16px;
@@ -412,9 +414,10 @@ section {
 .camino-footer {
   margin-top: 96px;
   text-align: center;
-  font-family: var(--font-script);
-  font-style: italic;
-  font-size: clamp(22px, 2.5vw, 32px);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(18px, 2vw, 26px);
   color: rgba(255, 255, 255, 0.8);
   max-width: 640px;
   margin-left: auto;
@@ -739,9 +742,10 @@ section {
 }
 
 .footer-tagline {
-  font-family: var(--font-script);
-  font-style: italic;
-  font-size: 24px;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
   color: var(--text-on-dark);
   margin-bottom: 24px;
   max-width: 320px;

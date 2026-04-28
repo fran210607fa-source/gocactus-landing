@@ -46,6 +46,7 @@ function LandingPage({ onNewsletterSubmit, onContactSubmit }) {
           <div className="problema-text fade-in">
             <p>No te enseñaron a manejar tu plata. A nosotros tampoco.</p>
             <p>Crecimos viendo a nuestros padres pelearla con inflación, corralitos y sueldos que no alcanzaban. Sabemos que ahorrar en pesos es perder, pero nadie nos explicó qué hacer en su lugar.</p>
+
             <p className="highlight"><strong>GOcactus existe para cambiar eso.</strong></p>
           </div>
         </div>
