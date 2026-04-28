@@ -594,7 +594,9 @@ section {
 .newsletter h2 {
   margin-bottom: 16px;
   color: var(--text-on-dark);
-  font-size: clamp(28px, 4.5vw, 64px);
+  font-size: clamp(20px, 3.2vw, 40px);
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .newsletter-subtitle {
@@ -929,6 +931,11 @@ section {
   }
 
   /* Newsletter */
+  .newsletter h2 {
+    white-space: normal;
+    font-size: clamp(20px, 7vw, 32px);
+  }
+
   .newsletter-form {
     flex-direction: column;
   }
