@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tengo algo para vos</title>
+  <meta name="description" content="Una invitación especial 💌" />
+  <meta property="og:title" content="Tengo algo para vos 💌" />
+  <meta property="og:description" content="Abrilo cuando estés sola 😏" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff5f3;
+      --bg2: #ffe4e1;
+      --ink: #3a1f2b;
+      --muted: #8a6170;
+      --accent: #e0476b;
+      --accent-soft: #ffd0da;
+      --card: #ffffffcc;
+      --shadow: 0 20px 50px -20px rgba(160, 40, 80, .35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 20% 10%, var(--bg2), transparent 60%),
+                  radial-gradient(circle at 80% 90%, #ffe9d6, transparent 55%),
+                  var(--bg);
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    h1, h2 { font-family: 'Playfair Display', serif; font-weight: 700; line-height: 1.15; }
+    h1 { font-size: clamp(2rem, 7vw, 3.2rem); }
+    h2 { font-size: clamp(1.6rem, 5.5vw, 2.4rem); }
+    em { font-family: 'Playfair Display', serif; font-style: italic; color: var(--accent); }
+    p { color: var(--muted); line-height: 1.6; font-size: 1.05rem; }
+
+    #hearts { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .floaty { position: absolute; bottom: -40px; opacity: .55; animation: up linear forwards; }
+    @keyframes up { to { transform: translateY(-115vh) rotate(25deg); opacity: 0; } }
+
+    main { position: relative; z-index: 1; min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; }
+    .step {
+      display: none; width: 100%; max-width: 460px; text-align: center;
+      background: var(--card); backdrop-filter: blur(10px);
+      border-radius: 28px; padding: 40px 28px; box-shadow: var(--shadow);
+      border: 1px solid #fff;
+    }
+    .step.active { display: block; animation: pop .55s cubic-bezier(.2, 1.4, .4, 1); }
+    @keyframes pop { from { opacity: 0; transform: translateY(20px) scale(.96); } }
+    .step > * + * { margin-top: 18px; }
+    .emoji { font-size: 3.4rem; line-height: 1; }
+
+    .btn {
+      font: 600 1.05rem 'Inter', sans-serif; border: 0; cursor: pointer;
+      padding: 14px 28px; border-radius: 999px; transition: transform .15s, box-shadow .2s;
+      background: var(--accent); color: #fff; box-shadow: 0 10px 24px -10px var(--accent);
+    }
+    .btn:hover { transform: translateY(-2px) scale(1.03); }
+    .btn:active { transform: scale(.97); }
+    .btn.ghost { background: #fff; color: var(--ink); box-shadow: 0 4px 14px -6px rgba(0,0,0,.2); }
+    .row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; min-height: 56px; }
+
+    /* Sobre */
+    .envelope { position: relative; width: 220px; height: 150px; margin: 10px auto 0; cursor: pointer; }
+    .envelope .body { position: absolute; inset: 0; background: #f7a8b8; border-radius: 10px; }
+    .envelope .flap {
+      position: absolute; top: 0; left: 0; width: 0; height: 0;
+      border-left: 110px solid transparent; border-right: 110px solid transparent;
+      border-top: 85px solid #ef8aa0; transform-origin: top; transition: transform .6s; z-index: 3;
+    }
+    .envelope .letter {
+      position: absolute; left: 14px; right: 14px; top: 14px; height: 120px; background: #fff;
+      border-radius: 6px; transition: transform .6s .3s; z-index: 1; display: grid; place-items: center; font-size: 2rem;
+    }
+    .envelope .front {
+      position: absolute; inset: 0; z-index: 2; border-radius: 10px;
+      background: linear-gradient(to top right, #f49bb0 50%, transparent 50%) left / 50% 100% no-repeat,
+                  linear-gradient(to top left, #f49bb0 50%, transparent 50%) right / 50% 100% no-repeat;
+    }
+    .envelope .seal { position: absolute; left: 50%; top: 70px; transform: translate(-50%, -50%); z-index: 4; font-size: 1.8rem; transition: opacity .3s; }
+    .envelope.open .flap { transform: rotateX(180deg); z-index: 0; }
+    .envelope.open .letter { transform: translateY(-70px); }
+    .envelope.open .seal { opacity: 0; }
+    .envelope:not(.open) { animation: wiggle 2.4s ease-in-out infinite; }
+    @keyframes wiggle { 0%, 80%, 100% { transform: rotate(0); } 85% { transform: rotate(-4deg); } 90% { transform: rotate(4deg); } 95% { transform: rotate(-2deg); } }
+
+    #noBtn { transition: transform .25s ease; }
+    .hint { font-size: .9rem; min-height: 1.4em; }
+
+    /* Plan */
+    .plan { text-align: left; display: grid; gap: 12px; }
+    .plan-item {
+      display: flex; gap: 14px; align-items: center; background: #fff; padding: 14px 16px; border-radius: 18px;
+      box-shadow: 0 6px 16px -10px rgba(160, 40, 80, .4); opacity: 0; transform: translateX(-16px);
+    }
+    .step.active .plan-item { animation: slide .5s forwards; }
+    .step.active .plan-item:nth-child(2) { animation-delay: .25s; }
+    .step.active .plan-item:nth-child(3) { animation-delay: .5s; }
+    @keyframes slide { to { opacity: 1; transform: none; } }
+    .plan-item .ico { font-size: 1.8rem; }
+    .plan-item b { display: block; font-size: 1.02rem; }
+    .plan-item span { color: var(--muted); font-size: .92rem; }
+
+    /* Raspadita */
+    .scratch { position: relative; width: 100%; max-width: 320px; height: 170px; margin: 10px auto 0; border-radius: 20px; overflow: hidden; }
+    .scratch .under {
+      position: absolute; inset: 0; display: grid; place-items: center; padding: 16px;
+      background: linear-gradient(135deg, #fff1c9, #ffd6e2); text-align: center;
+    }
+    .scratch .under div { font-size: 1.05rem; color: var(--ink); }
+    .scratch .under .big { font-size: 2.6rem; }
+    .scratch canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+
+    /* Slider vestimenta */
+    .dress-face { font-size: 4rem; transition: transform .2s; }
+    input[type=range] { width: 100%; accent-color: var(--accent); height: 28px; }
+    .scale { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); }
+    .verdict { font-weight: 600; color: var(--ink); min-height: 3em; }
+
+    /* Countdown */
+    .count { display: flex; gap: 10px; justify-content: center; }
+    .count div { background: #fff; border-radius: 16px; padding: 12px 10px; min-width: 66px; box-shadow: 0 6px 16px -10px rgba(160,40,80,.4); }
+    .count b { display: block; font: 700 1.7rem 'Playfair Display', serif; color: var(--accent); }
+    .count span { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+
+    .dots { position: fixed; bottom: 18px; left: 0; right: 0; display: flex; gap: 8px; justify-content: center; z-index: 2; }
+    .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-soft); transition: all .3s; }
+    .dots i.on { background: var(--accent); width: 22px; border-radius: 6px; }
+
+    #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+    .small { font-size: .85rem; }
+  </style>
+</head>
+<body>
+  <div id="hearts"></div>
+  <canvas id="confetti"></canvas>
+
+  <main>
+    <!-- 0 · Sobre -->
+    <section class="step active" data-step="0">
+      <h1>Tengo algo <em>para vos</em></h1>
+      <p>Tocá el sobre 💌</p>
+      <div class="envelope" id="envelope">
+        <div class="body"></div>
+        <div class="letter">💗</div>
+        <div class="front"></div>
+        <div class="flap"></div>
+        <div class="seal">❤️</div>
+      </div>
+    </section>
+
+    <!-- 1 · Pregunta -->
+    <section class="step" data-step="1">
+      <div class="emoji">🥺</div>
+      <h2>¿Querés salir conmigo <em>el jueves</em>?</h2>
+      <div class="row" id="askRow">
+        <button class="btn" id="yesBtn">¡Sí!</button>
+        <button class="btn ghost" id="noBtn">No</button>
+      </div>
+      <p class="hint" id="noHint"></p>
+    </section>
+
+    <!-- 2 · Plan -->
+    <section class="step" data-step="2">
+      <div class="emoji">🥰</div>
+      <h2>Sabía que ibas a decir <em>que sí</em></h2>
+      <p>Este es el plan:</p>
+      <div class="plan">
+        <div class="plan-item"><div class="ico">📅</div><div><b id="dateLabel">Jueves</b><span id="timeLabel">Te paso a buscar</span></div></div>
+        <div class="plan-item"><div class="ico">🍝</div><div><b>Primero, a cenar</b><span>Vos y yo, tranqui, rico</span></div></div>
+        <div class="plan-item"><div class="ico">🍦</div><div><b>Después… un helado muy especial</b><span>En un lugar muy importante 🤫</span></div></div>
+      </div>
+      <button class="btn" data-next>¿Qué lugar? 👀</button>
+    </section>
+
+    <!-- 3 · Raspadita -->
+    <section class="step" data-step="3">
+      <h2>¿Querés una <em>pista</em>?</h2>
+      <p>Raspá con el dedo ✨</p>
+      <div class="scratch">
+        <div class="under">
+          <div>
+            <div class="big">🍦❤️</div>
+            <div><b>Es un lugar que tiene que ver con nosotros.</b><br/>El resto… es sorpresa 😌</div>
+          </div>
+        </div>
+        <canvas id="scratchCanvas"></canvas>
+      </div>
+      <button class="btn" data-next id="afterScratch" style="visibility:hidden">Ok, me intriga 😳</button>
+    </section>
+
+    <!-- 4 · Dress code -->
+    <section class="step" data-step="4">
+      <h2>Una cosita más: <em>dress code</em></h2>
+      <p>¿Qué tan arreglada pensás venir?</p>
+      <div class="dress-face" id="dressFace">🙂</div>
+      <input type="range" id="dress" min="0" max="100" value="10" />
+      <div class="scale"><span>Pijama</span><span>Masomenos</span><span>Gala</span></div>
+      <p class="verdict" id="verdict"></p>
+      <button class="btn" data-next id="dressNext" style="visibility:hidden">Entendido 💅</button>
+    </section>
+
+    <!-- 5 · Final -->
+    <section class="step" data-step="5">
+      <div class="emoji">💘</div>
+      <h2>Nos vemos <em>el jueves</em></h2>
+      <div class="count" id="count">
+        <div><b id="cd-d">0</b><span>días</span></div>
+        <div><b id="cd-h">0</b><span>horas</span></div>
+        <div><b id="cd-m">0</b><span>min</span></div>
+        <div><b id="cd-s">0</b><span>seg</span></div>
+      </div>
+      <p>Arreglate un poquito, traé ganas de helado y dejá que yo me encargue del resto.</p>
+      <div class="row">
+        <a class="btn" id="waBtn" target="_blank" rel="noopener" style="text-decoration:none">Confirmar por WhatsApp 💬</a>
+      </div>
+      <p class="small"><a href="#" id="again" style="color:var(--muted)">Ver de nuevo</a></p>
+    </section>
+  </main>
+
+  <div class="dots" id="dots"></div>
+
+  <script>
+    // ====== Configuración: cambiá esto a gusto ======
+    const CONFIG = {
+      fecha: '2026-10-29T20:30:00',   // jueves 29/10, 20:30 hs
+      hora: '20:30',
+      whatsapp: '',                    // tu número con código de país, ej: '5491122334455' (vacío = elige contacto)
+      mensajeWa: '¡Sí! El jueves nos vemos 💘🍦',
+    };
+    // =================================================
+
+    const steps = [...document.querySelectorAll('.step')];
+    const dots = document.getElementById('dots');
+    steps.forEach(() => dots.appendChild(document.createElement('i')));
+    let current = 0;
+
+    function go(n) {
+      steps[current].classList.remove('active');
+      current = n;
+      steps[current].classList.add('active');
+      [...dots.children].forEach((d, i) => d.classList.toggle('on', i === n));
+      if (n === 3) initScratch();
+      if (n === 4) updateDress();
+      if (n === 5) { burst(); startCountdown(); }
+    }
+    go(0);
+    document.querySelectorAll('[data-next]').forEach(b => b.addEventListener('click', () => go(current + 1)));
+
+    // Fecha legible
+    const target = new Date(CONFIG.fecha);
+    const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    document.getElementById('dateLabel').textContent =
+      `${dias[target.getDay()][0].toUpperCase() + dias[target.getDay()].slice(1)} ${target.getDate()} de ${meses[target.getMonth()]}`;
+    document.getElementById('timeLabel').textContent = `Te paso a buscar a las ${CONFIG.hora} hs`;
+
+    // 0 · Sobre
+    const env = document.getElementById('envelope');
+    env.addEventListener('click', () => {
+      if (env.classList.contains('open')) return;
+      env.classList.add('open');
+      heartsBurst(12);
+      setTimeout(() => go(1), 1300);
+    });
+
+    // 1 · Botón "No" que se escapa
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const hint = document.getElementById('noHint');
+    const excusas = ['¿Segura? 🤨', 'Pensalo bien…', 'Hay helado eh 🍦', 'Ese botón no anda 😇', 'Dale que sí 🥺', 'No te escucho 🙉'];
+    let tries = 0;
+    function escape(e) {
+      e.preventDefault();
+      tries++;
+      const x = (Math.random() - .5) * Math.min(window.innerWidth - 120, 300);
+      const y = (Math.random() - .5) * 220;
+      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${Math.max(.45, 1 - tries * .1)})`;
+      yesBtn.style.transform = `scale(${Math.min(1.8, 1 + tries * .12)})`;
+      hint.textContent = excusas[(tries - 1) % excusas.length];
+    }
+    noBtn.addEventListener('mouseenter', escape);
+    noBtn.addEventListener('touchstart', escape, { passive: false });
+    noBtn.addEventListener('click', escape);
+    yesBtn.addEventListener('click', () => { burst(); go(2); });
+
+    // 3 · Raspadita
+    let scratchReady = false;
+    function initScratch() {
+      if (scratchReady) return;
+      scratchReady = true;
+      const c = document.getElementById('scratchCanvas');
+      const r = c.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      c.width = r.width * dpr; c.height = r.height * dpr;
+      const ctx = c.getContext('2d');
+      ctx.scale(dpr, dpr);
+      const g = ctx.createLinearGradient(0, 0, r.width, r.height);
+      g.addColorStop(0, '#e9b7c4'); g.addColorStop(.5, '#f6d3dc'); g.addColorStop(1, '#d99aab');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, r.width, r.height);
+      ctx.fillStyle = '#fff'; ctx.font = '600 18px Inter, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('✨ raspá acá ✨', r.width / 2, r.height / 2 + 6);
+      ctx.globalCompositeOperation = 'destination-out';
+      let down = false, done = false;
+      const pos = e => { const b = c.getBoundingClientRect(); const p = e.touches ? e.touches[0] : e; return [p.clientX - b.left, p.clientY - b.top]; };
+      const draw = e => {
+        if (!down) return;
+        e.preventDefault();
+        const [x, y] = pos(e);
+        ctx.beginPath(); ctx.arc(x, y, 22, 0, Math.PI * 2); ctx.fill();
+        if (!done && cleared() > .5) {
+          done = true;
+          c.style.transition = 'opacity .6s'; c.style.opacity = 0;
+          document.getElementById('afterScratch').style.visibility = 'visible';
+          heartsBurst(10);
+        }
+      };
+      const cleared = () => {
+        const d = ctx.getImageData(0, 0, c.width, c.height).data;
+        let t = 0; for (let i = 3; i < d.length; i += 64) if (d[i] === 0) t++;
+        return t / (d.length / 64);
+      };
+      c.addEventListener('pointerdown', e => { down = true; c.setPointerCapture(e.pointerId); draw(e); });
+      c.addEventListener('pointermove', draw);
+      c.addEventListener('pointerup', () => down = false);
+      c.addEventListener('pointercancel', () => down = false);
+    }
+
+    // 4 · Dress code
+    const dress = document.getElementById('dress');
+    const face = document.getElementById('dressFace');
+    const verdict = document.getElementById('verdict');
+    const dressNext = document.getElementById('dressNext');
+    function updateDress() {
+      const v = +dress.value;
+      let f, t, ok = false;
+      if (v < 18)      { f = '🛌'; t = 'Mmm… pijama no 😅 Subile un poco.'; }
+      else if (v < 35) { f = '👟'; t = 'Casi casi… un poquito más arreglada.'; }
+      else if (v < 66) { f = '💃'; t = '¡Ahí! Arregladita, linda, cómoda. Perfecto 🫶'; ok = true; }
+      else if (v < 85) { f = '👠'; t = 'Uh, tampoco tanto 😂 Nada muy wow.'; }
+      else             { f = '👑'; t = '¡Que no es una gala! Bajale un cambio 🙈'; }
+      face.textContent = f;
+      face.style.transform = `scale(${ok ? 1.2 : 1})`;
+      verdict.textContent = t;
+      dressNext.style.visibility = ok ? 'visible' : 'hidden';
+    }
+    dress.addEventListener('input', updateDress);
+
+    // 5 · Countdown + WhatsApp
+    let cdTimer;
+    function startCountdown() {
+      clearInterval(cdTimer);
+      const tick = () => {
+        let ms = Math.max(0, target - new Date());
+        const d = Math.floor(ms / 864e5); ms -= d * 864e5;
+        const h = Math.floor(ms / 36e5); ms -= h * 36e5;
+        const m = Math.floor(ms / 6e4); ms -= m * 6e4;
+        const s = Math.floor(ms / 1e3);
+        [['d', d], ['h', h], ['m', m], ['s', s]].forEach(([k, v]) => document.getElementById('cd-' + k).textContent = v);
+      };
+      tick(); cdTimer = setInterval(tick, 1000);
+    }
+    document.getElementById('waBtn').href =
+      `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(CONFIG.mensajeWa)}`;
+    document.getElementById('again').addEventListener('click', e => {
+      e.preventDefault();
+      env.classList.remove('open');
+      tries = 0; noBtn.style.transform = ''; yesBtn.style.transform = ''; hint.textContent = '';
+      go(0);
+    });
+
+    // Corazones flotando
+    const heartsEl = document.getElementById('hearts');
+    const symbols = ['❤️', '💗', '💕', '🍦', '✨'];
+    function heart() {
+      const s = document.createElement('div');
+      s.className = 'floaty';
+      s.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.fontSize = 14 + Math.random() * 18 + 'px';
+      s.style.animationDuration = 6 + Math.random() * 6 + 's';
+      heartsEl.appendChild(s);
+      setTimeout(() => s.remove(), 12000);
+    }
+    function heartsBurst(n) { for (let i = 0; i < n; i++) setTimeout(heart, i * 80); }
+    setInterval(heart, 900);
+
+    // Confetti
+    const cf = document.getElementById('confetti');
+    const cx = cf.getContext('2d');
+    let parts = [], running = false;
+    function resize() { cf.width = innerWidth; cf.height = innerHeight; }
+    resize(); addEventListener('resize', resize);
+    function burst() {
+      const colors = ['#e0476b', '#ffb3c6', '#ffd166', '#ffffff', '#f78fb3'];
+      for (let i = 0; i < 140; i++) parts.push({
+        x: innerWidth / 2, y: innerHeight / 2.2,
+        vx: (Math.random() - .5) * 14, vy: Math.random() * -14 - 3,
+        r: 4 + Math.random() * 5, c: colors[i % colors.length], a: Math.random() * 6, life: 120 + Math.random() * 60,
+      });
+      if (!running) { running = true; requestAnimationFrame(loop); }
+    }
+    function loop() {
+      cx.clearRect(0, 0, cf.width, cf.height);
+      parts.forEach(p => {
+        p.vy += .35; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.a += .2; p.life--;
+        cx.save(); cx.translate(p.x, p.y); cx.rotate(p.a);
+        cx.fillStyle = p.c; cx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 1.6); cx.restore();
+      });
+      parts = parts.filter(p => p.life > 0 && p.y < cf.height + 20);
+      if (parts.length) requestAnimationFrame(loop); else { running = false; cx.clearRect(0, 0, cf.width, cf.height); }
+    }
+  </script>
+</body>
+</html>
