@@ -2,105 +2,139 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Miércoles</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <title>Para vos</title>
   <meta name="description" content="Una invitación." />
-  <meta property="og:title" content="Una invitación" />
-  <meta property="og:description" content="Miércoles, 21:00." />
-  <meta name="theme-color" content="#0c0405" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%239e1b2c'/></svg>" />
+  <meta property="og:title" content="Para vos" />
+  <meta property="og:description" content="Abrilo con sonido." />
+  <meta name="theme-color" content="#0b0304" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%23a3172b'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Courier+Prime:wght@400;700&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Tenor+Sans&family=Pinyon+Script&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --black: #0c0405;
-      --maroon: #4a0c15;
-      --red: #9e1b2c;
-      --cream: #f3ece1;
-      --ink: #2a0b10;
-      --muted: #8a5a5f;
-      --line: rgba(122, 20, 35, .28);
-      --serif: 'Instrument Serif', Georgia, serif;
-      --mono: 'Courier Prime', 'Courier New', monospace;
+      --black: #0b0304;
+      --red: #a3172b;
+      --bright: #d8313f;
+      --cream: #f4ece0;
+      --ink: #22080c;
+      --muted: #8c5a5e;
+      --line: rgba(130, 20, 38, .26);
+      --serif: 'Bodoni Moda', 'Didot', serif;
+      --sans: 'Tenor Sans', 'Helvetica Neue', sans-serif;
       --script: 'Pinyon Script', cursive;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { min-height: 100%; }
+    html, body { height: 100%; }
     body {
-      background:
-        radial-gradient(60% 45% at 50% 42%, rgba(158, 27, 44, .38), transparent 70%),
-        radial-gradient(120% 90% at 50% 110%, var(--maroon), transparent 60%),
-        var(--black);
-      background-attachment: fixed;
-      color: var(--ink);
-      font-family: var(--mono);
-      overflow-x: hidden;
-      -webkit-tap-highlight-color: transparent;
-      -webkit-font-smoothing: antialiased;
+      background: radial-gradient(120% 70% at 50% 100%, #3d0a13 0%, transparent 60%), var(--black);
+      color: var(--ink); font-family: var(--sans);
+      overflow: hidden; touch-action: manipulation; user-select: none; -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased;
     }
     body::after {
-      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: .08;
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 90; opacity: .07;
       background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     }
+    #bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; }
 
-    main { min-height: 100vh; min-height: 100svh; display: grid; place-items: center; padding: 32px 16px; }
-
-    .label { font: 400 .72rem/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-    .title { font: 400 clamp(2.6rem, 11vw, 3.3rem)/1 var(--serif); letter-spacing: -.02em; }
+    .label { font: 400 .7rem/1.4 var(--sans); letter-spacing: .28em; text-transform: uppercase; color: var(--muted); }
+    .title { font: 400 clamp(2.4rem, 11vw, 3rem)/1.02 var(--serif); letter-spacing: -.01em; }
     .title i { color: var(--red); }
-    .body { font: 400 .92rem/1.65 var(--mono); color: #5a3439; }
-    .rule { width: 100%; height: 1px; background: var(--line); }
+    .script { font: 400 2.3rem/1.05 var(--script); color: var(--red); }
 
-    .step { display: none; width: 100%; max-width: 380px; text-align: center; }
-    .step.active { display: block; }
+    /* ---------- Mute ---------- */
+    #mute {
+      position: fixed; top: calc(14px + env(safe-area-inset-top)); right: 14px; z-index: 80;
+      width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(244,236,224,.25);
+      background: rgba(11,3,4,.4); color: var(--cream); display: none; place-items: center; cursor: pointer;
+    }
+    #mute svg { width: 18px; height: 18px; }
+    #mute.on { display: grid; }
 
-    /* ---------- Intro + sobre ---------- */
-    .intro .eyebrow { font: 400 .72rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #c7a4a1; }
-    .intro h1 { font: 400 clamp(2.5rem, 11vw, 3.2rem)/1 var(--serif); color: #f3ece1; margin-top: 14px; }
-    .intro h1 i { color: #e0525f; }
-    .intro .hint { margin-top: 44px; color: #b08b88; animation: breathe 2.6s ease-in-out infinite; }
-    @keyframes breathe { 50% { opacity: .35; } }
-    .intro .eyebrow, .intro h1 { transition: opacity .5s, transform .6s; }
-    .intro.opening .eyebrow, .intro.opening h1, .intro.opening .hint { opacity: 0; transform: translateY(-10px); animation: none; transition: opacity .5s, transform .6s; }
+    /* ---------- Inicio ---------- */
+    #start {
+      position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; text-align: center;
+      color: var(--cream); cursor: pointer; transition: opacity .8s;
+    }
+    #start .inner > * + * { margin-top: 18px; }
+    #start .big { font: 400 italic clamp(2.2rem, 10vw, 2.8rem)/1.1 var(--serif); }
+    #start .label { color: #c79a98; }
+    #start .tap { animation: breathe 2.4s ease-in-out infinite; margin-top: 46px !important; }
+    #start.gone { opacity: 0; pointer-events: none; }
+    @keyframes breathe { 50% { opacity: .3; } }
 
+    /* ---------- Escena del sobre ---------- */
+    #scene { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; pointer-events: none; }
+    .env-wrap { width: min(320px, 84vw); aspect-ratio: 1.5; opacity: 0; pointer-events: auto; }
     .envelope {
-      position: relative; width: min(320px, 86vw); aspect-ratio: 1.5; margin: 72px auto 0;
-      perspective: 1400px; cursor: pointer;
-      filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .7));
-      transition: transform .8s cubic-bezier(.6, 0, .3, 1), opacity .6s;
+      position: relative; width: 100%; height: 100%; perspective: 1400px; cursor: pointer;
+      filter: drop-shadow(0 30px 34px rgba(0, 0, 0, .75));
     }
     .envelope > div { position: absolute; inset: 0; }
-    .env-back { background: #23060a; border-radius: 4px; z-index: 0; }
+    .env-back { background: #22060a; border-radius: 4px; }
     .env-letter {
       inset: 8px 14px 10px !important; background: var(--cream); border-radius: 2px; z-index: 2;
       display: grid; place-items: center; transition: transform 1s cubic-bezier(.5, 0, .2, 1);
     }
-    .env-letter span { font: 400 2rem var(--script); color: var(--red); }
-    .env-left  { z-index: 3; background: #4d0f19; clip-path: polygon(0 0, 52% 56%, 0 100%); border-radius: 4px; }
-    .env-right { z-index: 3; background: #4d0f19; clip-path: polygon(100% 0, 48% 56%, 100% 100%); border-radius: 4px; }
-    .env-bottom { z-index: 3; background: linear-gradient(#5c1420, #4a0e18); clip-path: polygon(0 100%, 50% 48%, 100% 100%); border-radius: 4px; }
+    .env-letter span { font: 400 2.1rem var(--script); color: var(--red); }
+    .env-left  { z-index: 3; background: #4f0f1a; clip-path: polygon(0 0, 52% 56%, 0 100%); border-radius: 4px; }
+    .env-right { z-index: 3; background: #4f0f1a; clip-path: polygon(100% 0, 48% 56%, 100% 100%); border-radius: 4px; }
+    .env-bottom { z-index: 3; background: linear-gradient(#5e1522, #4b0e19); clip-path: polygon(0 100%, 50% 48%, 100% 100%); border-radius: 4px; }
     .env-flap {
       height: 58% !important; bottom: auto !important; z-index: 4; border-radius: 4px 4px 0 0;
-      background: linear-gradient(#3e0a12, #36080f); clip-path: polygon(0 0, 100% 0, 50% 100%);
+      background: linear-gradient(#400b14, #37080f); clip-path: polygon(0 0, 100% 0, 50% 100%);
       transform-origin: top center; transition: transform .8s cubic-bezier(.5, 0, .3, 1);
     }
     .envelope .seal {
-      inset: auto; position: absolute; left: 50%; top: 58%; z-index: 6; width: 66px; height: 66px;
-      transform: translate(-50%, -50%);
-      transition: transform .5s cubic-bezier(.6, -.4, .4, 1.4), opacity .4s;
+      inset: auto; left: 50%; top: 58%; z-index: 6; width: 68px; height: 68px;
+      transform: translate(-50%, -50%) scale(1.5); opacity: 0;
+      transition: transform .5s cubic-bezier(.6, -.4, .4, 1.4), opacity .3s;
     }
     .seal svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 3px 5px rgba(0,0,0,.6)); }
-    .envelope:hover .seal { transform: translate(-50%, -50%) scale(1.05); }
-    .envelope.open .seal { transform: translate(-50%, -50%) scale(.2) rotate(-40deg); opacity: 0; }
+    .envelope .seal.on { opacity: 1; transform: translate(-50%, -50%) scale(1); transition: transform .18s ease-out, opacity .1s; }
+    .envelope.open .seal { transform: translate(-50%, -50%) scale(.2) rotate(-40deg); opacity: 0; transition: transform .45s, opacity .4s; }
     .envelope.open .env-flap { transform: rotateX(180deg); }
     .envelope.flap-behind .env-flap { z-index: 1; }
     .envelope.rise .env-letter { transform: translateY(-50%); }
-    .envelope.leave { transform: translateY(40px) scale(.96); opacity: 0; }
 
-    /* ---------- Tarjeta con esquinas recortadas ---------- */
-    .step:not(.intro) { filter: drop-shadow(0 40px 50px rgba(0, 0, 0, .65)); }
-    .card, .card::before {
+    .hint {
+      position: fixed; left: 0; right: 0; bottom: calc(16vh + env(safe-area-inset-bottom)); text-align: center; z-index: 11;
+      color: #c79a98; opacity: 0; transition: opacity .6s; pointer-events: none;
+    }
+    .hint.on { opacity: 1; animation: breathe 2.4s ease-in-out infinite; }
+
+    /* viento */
+    #wind { position: fixed; inset: 0; z-index: 12; pointer-events: none; width: 100%; height: 100%; }
+    #wind path { fill: none; stroke: rgba(244, 236, 224, .35); stroke-width: 1.2; stroke-linecap: round; stroke-dasharray: 160 1400; stroke-dashoffset: 1560; }
+    #wind.blow path { animation: gust 1.8s cubic-bezier(.4, 0, .3, 1) forwards; }
+    #wind.blow path:nth-child(2) { animation-delay: .15s; }
+    #wind.blow path:nth-child(3) { animation-delay: .35s; }
+    #wind.blow path:nth-child(4) { animation-delay: .5s; }
+    #wind.blow path:nth-child(5) { animation-delay: .7s; }
+    @keyframes gust { to { stroke-dashoffset: 0; } }
+
+    /* sellador */
+    .stamper { position: fixed; z-index: 40; width: 96px; height: 168px; pointer-events: none; opacity: 0; transform-origin: 50% 100%; }
+    .puff { position: fixed; z-index: 41; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; pointer-events: none; background: rgba(255, 236, 230, .55); filter: blur(3px); }
+
+    /* ---------- Tarjeta que gira ---------- */
+    #stage { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; perspective: 1500px; pointer-events: none; }
+    #card {
+      position: relative; width: min(340px, 88vw); height: min(540px, 76svh);
+      transform-style: preserve-3d; visibility: hidden;
+    }
+    .face {
+      position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .6)); pointer-events: none;
+    }
+    .face.active { pointer-events: auto; }
+    #faceB { transform: rotateY(180deg); }
+    .paper {
+      position: absolute; inset: 0; background: var(--cream); padding: 50px 28px 40px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+      --r: 26px;
       -webkit-mask:
         radial-gradient(circle var(--r) at 0 0, #0000 98%, #000) top left,
         radial-gradient(circle var(--r) at 100% 0, #0000 98%, #000) top right,
@@ -114,115 +148,119 @@
         radial-gradient(circle var(--r) at 100% 100%, #0000 98%, #000) bottom right;
       mask-size: 51% 51%; mask-repeat: no-repeat;
     }
-    .card { --r: 26px; position: relative; background: var(--cream); padding: 56px 30px 44px; }
-    .card::before { --r: 26px; content: ''; position: absolute; inset: 12px; border: 1px solid var(--line); pointer-events: none; }
-
-    .reveal > * { opacity: 0; transform: translateY(14px); }
-    .step.active .reveal > * { animation: rise .9s cubic-bezier(.2, .7, .2, 1) forwards; }
-    .step.active .reveal > *:nth-child(2) { animation-delay: .12s; }
-    .step.active .reveal > *:nth-child(3) { animation-delay: .24s; }
-    .step.active .reveal > *:nth-child(4) { animation-delay: .36s; }
-    .step.active .reveal > *:nth-child(5) { animation-delay: .48s; }
-    .step.active .reveal > *:nth-child(6) { animation-delay: .6s; }
-    .step.active .reveal > *:nth-child(7) { animation-delay: .72s; }
-    .step.active .reveal > *:nth-child(8) { animation-delay: .84s; }
-    @keyframes rise { to { opacity: 1; transform: none; } }
-    .reveal > * + * { margin-top: 22px; }
-
-    .date-block { display: flex; align-items: center; justify-content: center; gap: 18px; }
-    .date-block .num { font: 400 5rem/0.85 var(--serif); color: var(--red); }
-    .date-block .side { text-align: left; }
-    .date-block .side div:first-child { font: 400 1.6rem/1 var(--serif); margin-bottom: 6px; }
-    .date-block .vr { width: 1px; align-self: stretch; background: var(--line); }
-
-    .itinerary { text-align: left; border-top: 1px solid var(--line); }
-    .it-row { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: center; padding: 16px 2px; border-bottom: 1px solid var(--line); }
-    .it-row .n { color: var(--red); display: grid; place-items: center; }
-    .it-row .n svg { width: 26px; height: 26px; }
-    .it-row b { display: block; font: 400 1.5rem/1.1 var(--serif); }
-    .it-row span { font: 400 .82rem var(--mono); color: var(--muted); }
-
-    .next {
-      display: inline-flex; align-items: center; gap: 10px; margin-top: 28px;
-      background: none; border: 0; border-bottom: 1px solid currentColor; cursor: pointer; padding: 6px 0;
-      font: 700 .74rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink);
+    .paper::before {
+      content: ''; position: absolute; inset: 12px; border: 1px solid var(--line); pointer-events: none;
+      -webkit-mask: inherit; mask: inherit; -webkit-mask-size: 51% 51%; mask-size: 51% 51%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
     }
-    .next::after { content: '→'; font-weight: 400; transition: transform .3s; }
-    .next:hover::after { transform: translateX(5px); }
+    .paper > * + * { margin-top: 20px; }
+    .face .paper > * { opacity: 0; transform: translateY(14px); }
+    .face.show .paper > * { animation: rise .9s cubic-bezier(.2, .7, .2, 1) forwards; }
+    .face.show .paper > *:nth-child(2) { animation-delay: .15s; }
+    .face.show .paper > *:nth-child(3) { animation-delay: .3s; }
+    .face.show .paper > *:nth-child(4) { animation-delay: .45s; }
+    .face.show .paper > *:nth-child(5) { animation-delay: .6s; }
+    .face.show .paper > *:nth-child(6) { animation-delay: .75s; }
+    .face.show .paper > *:nth-child(7) { animation-delay: .9s; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+
+    .ornament { display: flex; align-items: center; gap: 10px; color: var(--red); }
+    .ornament::before, .ornament::after { content: ''; width: 46px; height: 1px; background: var(--line); }
+    .ornament span { width: 6px; height: 6px; background: var(--red); transform: rotate(45deg); }
+    .when { font: 400 1.65rem/1.15 var(--serif); }
+    .hour { font: 400 3.6rem/1 var(--serif); color: var(--red); letter-spacing: -.02em; }
+    .timer { position: absolute; left: 50px; right: 50px; bottom: 30px; height: 1px; background: var(--line); opacity: 1 !important; transform: none !important; }
+    .timer i { display: block; height: 100%; width: 0; background: var(--red); }
+    .face.show .timer i { animation: fillbar var(--dur, 4.5s) linear forwards; animation-delay: 1s; }
+    @keyframes fillbar { to { width: 100%; } }
+
+    /* pregunta */
+    .choices { position: relative; width: 100%; height: 150px; }
     .btn {
       display: inline-block; text-decoration: none; cursor: pointer; border: 1px solid var(--red);
-      background: var(--red); color: var(--cream); padding: 16px 28px;
-      font: 700 .74rem var(--mono); letter-spacing: .12em; text-transform: uppercase; transition: background .3s, color .3s;
+      background: var(--red); color: var(--cream); padding: 16px 34px; min-width: 110px;
+      font: 400 .78rem var(--sans); letter-spacing: .24em; text-transform: uppercase;
     }
-    .btn:hover { background: transparent; color: var(--red); }
-    .btn.outline { background: transparent; color: var(--red); }
-    .btn.outline:hover { background: var(--red); color: var(--cream); }
+    .btn.ghost { background: transparent; color: var(--red); }
+    .choices .btn { position: absolute; top: 40px; transition: left .35s cubic-bezier(.3, 1.4, .5, 1), top .35s cubic-bezier(.3, 1.4, .5, 1), transform .2s; }
+    #yes { left: calc(50% - 125px); }
+    #no { left: calc(50% + 15px); }
+    #yes:active { transform: scale(.96); }
 
-    /* ---------- Raspadita ---------- */
-    .scratch { position: relative; height: 150px; overflow: hidden; }
-    .scratch .under {
-      position: absolute; inset: 0; display: grid; place-items: center; padding: 18px;
-      border: 1px solid var(--line);
+    /* línea de dress code */
+    .range { position: relative; width: 100%; height: 44px; margin-top: 34px !important; touch-action: none; }
+    .range .track { position: absolute; left: 12px; right: 12px; top: 21px; height: 1px; background: var(--line); }
+    .range .fill { position: absolute; left: 12px; top: 20px; height: 3px; background: var(--red); width: 0; }
+    .range .dot { position: absolute; top: 17px; width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%; background: var(--cream); border: 1px solid var(--red); }
+    .range .thumb {
+      position: absolute; top: 8px; width: 28px; height: 28px; margin-left: -14px; border-radius: 50%;
+      background: var(--red); box-shadow: 0 4px 12px rgba(163, 23, 43, .45); cursor: grab; touch-action: none;
     }
-    .scratch .under p { font: 400 1.55rem/1.25 var(--serif); }
-    .scratch canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; transition: opacity .8s; }
-    .hidden { visibility: hidden; }
+    .range .thumb::after { content: ''; position: absolute; inset: 9px; border-radius: 50%; background: var(--cream); }
+    .range.glide .thumb, .range.glide .fill { transition: left .5s cubic-bezier(.3, 1.3, .5, 1), width .5s cubic-bezier(.3, 1.3, .5, 1); }
+    .range-labels { display: flex; justify-content: space-between; width: 100%; margin-top: 8px !important; }
+    .range-labels span { font: 400 .66rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); width: 33%; transition: color .3s; }
+    .range-labels span:first-child { text-align: left; }
+    .range-labels span:last-child { text-align: right; }
+    .range-labels span.sel { color: var(--red); }
+    .pretty { font: italic 400 1.3rem/1.4 var(--serif); color: var(--red); margin-top: 38px !important; }
+    .shake { animation: shake .45s; }
+    @keyframes shake { 20%, 60% { transform: translateX(-7px); } 40%, 80% { transform: translateX(7px); } }
 
-    /* ---------- Dress code ---------- */
-    .options { display: grid; gap: 10px; text-align: left; }
-    .opt {
-      display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
-      padding: 15px 18px; border: 1px solid var(--line); background: transparent; cursor: pointer;
-      font: 400 1.45rem var(--serif); color: var(--ink); text-align: left; transition: border-color .3s, background .3s, color .3s;
-    }
-    .opt small { font: 400 .68rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-    .opt.selected { border-color: var(--red); background: var(--red); color: var(--cream); }
-    .opt.selected small { color: #f1c9c9; }
-    .note { font: 400 .9rem/1.5 var(--mono); color: #5a3439; min-height: 1.5em; }
+    /* final */
+    .count { display: flex; justify-content: center; gap: 16px; }
+    .count div { min-width: 48px; }
+    .count b { display: block; font: 400 2.5rem/1 var(--serif); color: var(--red); font-variant-numeric: tabular-nums; }
+    .count span { font: 400 .58rem var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+    .body { font: 400 1.2rem/1.5 var(--serif); color: #4e2a2f; }
+    .stamp { position: absolute; right: 26px; top: 26px; width: 92px; height: 92px; pointer-events: none; opacity: 0 !important; }
+    .stamp.on { opacity: .92 !important; transform: rotate(-14deg) !important; }
+    .confirm-area { min-height: 52px; }
+    .confirm-area .btn { white-space: nowrap; padding: 16px 20px; letter-spacing: .16em; }
 
-    /* ---------- Final ---------- */
-    .count { display: flex; justify-content: center; gap: 24px; }
-    .count div { min-width: 50px; }
-    .count b { display: block; font: 400 3rem/1 var(--serif); color: var(--red); }
-    .count span { font: 400 .66rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-
-    .stamp {
-      position: absolute; right: 30px; top: 30px; width: 88px; height: 88px; pointer-events: none;
-      opacity: 0; transform: scale(1.8) rotate(-30deg);
-    }
-    .stamp.on { animation: stamp .45s cubic-bezier(.3, 1.6, .5, 1) forwards; }
-    @keyframes stamp { to { opacity: .9; transform: scale(1) rotate(-14deg); } }
-    .confirm-area { min-height: 54px; }
-
-    .progress { position: fixed; top: 0; left: 0; height: 2px; background: #e0525f; width: 0; transition: width .6s ease; z-index: 10; }
-    .again { display: inline-block; margin-top: 28px; font: 400 .72rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: #b08b88; text-decoration: none; border-bottom: 1px solid currentColor; }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    @media (min-width: 700px) {
+      body::before { content: 'Abrilo desde el celular'; position: fixed; bottom: 14px; left: 0; right: 0; text-align: center; z-index: 5; font: 400 .65rem var(--sans); letter-spacing: .25em; text-transform: uppercase; color: #6d4547; }
     }
   </style>
 </head>
 <body>
-  <div class="progress" id="progress"></div>
+  <canvas id="bg"></canvas>
 
-  <main>
-    <!-- 0 · Sobre -->
-    <section class="step intro active" data-step="0">
-      <div class="eyebrow">Para vos</div>
-      <h1>Tengo algo <i>que darte</i></h1>
-      <div class="envelope" id="envelope" role="button" aria-label="Abrir el sobre" tabindex="0">
+  <button id="mute" aria-label="Silenciar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path id="waves" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+  </button>
+
+  <div id="start">
+    <div class="inner">
+      <div class="label">Para vos</div>
+      <div class="big">Tengo algo<br/>que darte</div>
+      <div class="label">Subí el volumen</div>
+      <div class="label tap">Tocá la pantalla</div>
+    </div>
+  </div>
+
+  <svg id="wind" viewBox="0 0 400 800" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M-40 220 C 60 180, 140 260, 240 210 S 380 170, 460 230"/>
+    <path d="M-40 330 C 80 300, 160 370, 260 320 S 400 300, 460 340"/>
+    <path d="M-40 420 C 50 400, 150 450, 250 410 S 390 380, 460 420"/>
+    <path d="M-40 520 C 70 490, 170 560, 270 510 S 400 480, 460 520"/>
+    <path d="M-40 610 C 60 590, 140 640, 240 600 S 380 570, 460 610"/>
+  </svg>
+
+  <div id="scene">
+    <div class="env-wrap" id="envWrap">
+      <div class="envelope" id="envelope" role="button" aria-label="Abrir el sobre">
         <div class="env-back"></div>
-        <div class="env-letter"><span>para vos</span></div>
+        <div class="env-letter" id="letter"><span>para vos</span></div>
         <div class="env-left"></div>
         <div class="env-right"></div>
         <div class="env-bottom"></div>
         <div class="env-flap"></div>
-        <div class="seal">
+        <div class="seal" id="seal">
           <svg viewBox="0 0 100 100" aria-hidden="true">
             <defs>
               <radialGradient id="wax" cx="38%" cy="32%" r="75%">
-                <stop offset="0" stop-color="#d8404f" />
-                <stop offset=".55" stop-color="#9e1b2c" />
+                <stop offset="0" stop-color="#dc4252" />
+                <stop offset=".55" stop-color="#a3172b" />
                 <stop offset="1" stop-color="#5c0a16" />
               </radialGradient>
             </defs>
@@ -234,82 +272,30 @@
           </svg>
         </div>
       </div>
-      <div class="label hint">Tocá el sello</div>
-    </section>
+    </div>
+  </div>
+  <div class="hint label" id="hint">Tocá el sello</div>
 
-    <!-- 1 · Invitación -->
-    <section class="step" data-step="1">
-      <div class="card reveal">
-        <div class="label">Estás invitada</div>
-        <div class="title">Una noche <i>juntas</i></div>
-        <div class="date-block">
-          <div class="num" id="dayNum">28</div>
-          <div class="vr"></div>
-          <div class="side">
-            <div id="dayName">Miércoles</div>
-            <div class="label" id="monthTime">Octubre · 21:00</div>
-          </div>
-        </div>
-        <div class="itinerary">
-          <div class="it-row"><div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v8M5 3v4a2 2 0 0 0 4 0V3M7 11v10M17 21V3c-2 1-3 4-3 8h3"/></svg></div><div><b>Cena</b><span>Te paso a buscar.</span></div></div>
-          <div class="it-row"><div class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11.5 12 21l4-9.5"/><circle cx="12" cy="8" r="4.5"/></svg></div><div><b>Un helado</b><span>En un lugar importante.</span></div></div>
-        </div>
-        <div><button class="next" data-next>Continuar</button></div>
-      </div>
-    </section>
+  <div id="stage">
+    <div id="card">
+      <div class="face" id="faceA"></div>
+      <div class="face" id="faceB"></div>
+    </div>
+  </div>
 
-    <!-- 2 · El lugar -->
-    <section class="step" data-step="2">
-      <div class="card reveal">
-        <div class="label">El segundo lugar</div>
-        <div class="title">Una <i>pista</i></div>
-        <div class="body">Raspá para descubrirla.</div>
-        <div class="scratch">
-          <div class="under"><p>Tiene que ver con nosotras.<br/>El resto, esa noche.</p></div>
-          <canvas id="scratchCanvas"></canvas>
-        </div>
-        <div><button class="next hidden" data-next id="afterScratch">Continuar</button></div>
-      </div>
-    </section>
-
-    <!-- 3 · Dress code -->
-    <section class="step" data-step="3">
-      <div class="card reveal">
-        <div class="label">Dress code</div>
-        <div class="title">¿Qué te <i>ponés</i>?</div>
-        <div class="options" id="options">
-          <button class="opt" data-ok="0">Cómoda <small>Jean y zapatillas</small></button>
-          <button class="opt" data-ok="1">Arreglada <small>Sin exagerar</small></button>
-          <button class="opt" data-ok="0">De gala <small>Vestido largo</small></button>
-        </div>
-        <div class="note" id="note">&nbsp;</div>
-        <div><button class="next hidden" data-next id="dressNext">Continuar</button></div>
-      </div>
-    </section>
-
-    <!-- 4 · Confirmación -->
-    <section class="step" data-step="4">
-      <div class="card reveal">
-        <svg class="stamp" id="stamp" viewBox="0 0 100 100" aria-hidden="true">
-          <defs><path id="circ" d="M50 50 m-36 0 a36 36 0 1 1 72 0 a36 36 0 1 1 -72 0"/></defs>
-          <circle cx="50" cy="50" r="46" fill="none" stroke="#9e1b2c" stroke-width="2"/>
-          <circle cx="50" cy="50" r="27" fill="none" stroke="#9e1b2c" stroke-width="1"/>
-          <text font-family="Courier Prime, monospace" font-weight="700" font-size="9" letter-spacing="2.4" fill="#9e1b2c"><textPath href="#circ">CONFIRMADO · CONFIRMADO ·</textPath></text>
-          <text x="50" y="57" text-anchor="middle" font-family="Instrument Serif, serif" font-size="20" fill="#9e1b2c" id="stampDate">28.10</text>
-        </svg>
-        <div class="label">Faltan</div>
-        <div class="count">
-          <div><b id="cd-d">0</b><span>días</span></div>
-          <div><b id="cd-h">0</b><span>horas</span></div>
-          <div><b id="cd-m">0</b><span>min</span></div>
-        </div>
-        <div class="rule"></div>
-        <div class="body" id="finalText">Miércoles, 21:00.<br/>Te paso a buscar.</div>
-        <div class="confirm-area" id="confirmArea"></div>
-      </div>
-      <a href="#" class="again" id="again">Volver al inicio</a>
-    </section>
-  </main>
+  <template id="stamperTpl">
+    <svg class="stamper" viewBox="0 0 80 140" aria-hidden="true">
+      <defs>
+        <linearGradient id="wood" x1="0" x2="1"><stop offset="0" stop-color="#2a100b"/><stop offset=".45" stop-color="#5a2a1c"/><stop offset="1" stop-color="#1e0b07"/></linearGradient>
+        <linearGradient id="brass" x1="0" x2="1"><stop offset="0" stop-color="#7a5a2a"/><stop offset=".4" stop-color="#e2c07a"/><stop offset=".7" stop-color="#b08840"/><stop offset="1" stop-color="#5e431c"/></linearGradient>
+      </defs>
+      <ellipse cx="40" cy="20" rx="17" ry="18" fill="url(#wood)"/>
+      <path d="M33 34 C 31 60, 30 74, 28 86 L 52 86 C 50 74, 49 60, 47 34 Z" fill="url(#wood)"/>
+      <rect x="24" y="84" width="32" height="9" rx="2" fill="url(#brass)"/>
+      <path d="M20 93 h40 l5 30 a3 3 0 0 1 -3 3 h-44 a3 3 0 0 1 -3 -3 z" fill="url(#brass)"/>
+      <rect x="14" y="124" width="52" height="3" rx="1.5" fill="#4a3415"/>
+    </svg>
+  </template>
 
   <script>
     // ====== Configuración ======
@@ -320,142 +306,407 @@
     };
     // ===========================
 
-    const steps = [...document.querySelectorAll('.step')];
-    const progress = document.getElementById('progress');
-    let current = 0;
-
-    function go(n) {
-      steps[current].classList.remove('active');
-      current = n;
-      steps[current].classList.add('active');
-      progress.style.width = (n / (steps.length - 1)) * 100 + '%';
-      window.scrollTo(0, 0);
-      if (n === 2) requestAnimationFrame(initScratch);
-      if (n === 4) startCountdown();
-    }
-    document.querySelectorAll('[data-next]').forEach(b => b.addEventListener('click', () => go(current + 1)));
-
-    // Fecha
+    const $ = s => document.querySelector(s);
+    const wait = ms => new Promise(r => setTimeout(r, ms));
     const target = new Date(CONFIG.fecha);
-    const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const cap = s => s[0].toUpperCase() + s.slice(1);
     const hhmm = `${String(target.getHours()).padStart(2, '0')}:${String(target.getMinutes()).padStart(2, '0')}`;
-    document.getElementById('dayNum').textContent = target.getDate();
-    document.getElementById('dayName').textContent = dias[target.getDay()];
-    document.getElementById('monthTime').textContent = `${meses[target.getMonth()]} · ${hhmm}`;
-    document.getElementById('stampDate').textContent = `${target.getDate()}.${target.getMonth() + 1}`;
-    document.getElementById('finalText').innerHTML = `${dias[target.getDay()]}, ${hhmm}.<br/>Te paso a buscar.`;
+    const dayLong = `${cap(dias[target.getDay()])} ${target.getDate()} de ${meses[target.getMonth()]}`;
 
-    // 0 · Sobre
-    const env = document.getElementById('envelope');
-    function openEnvelope() {
-      if (env.classList.contains('open')) return;
-      env.classList.add('open');
-      steps[0].classList.add('opening');
-      setTimeout(() => env.classList.add('flap-behind'), 420);
-      setTimeout(() => env.classList.add('rise'), 750);
-      setTimeout(() => env.classList.add('leave'), 1900);
-      setTimeout(() => go(1), 2400);
-    }
-    env.addEventListener('click', openEnvelope);
-    env.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openEnvelope(); });
+    /* ================= Sonido (sintetizado) ================= */
+    const sfx = {
+      ac: null, out: null, noise: null, muted: false,
+      init() {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        this.ac = new AC();
+        this.out = this.ac.createGain(); this.out.gain.value = 1; this.out.connect(this.ac.destination);
+        const len = this.ac.sampleRate * 3, buf = this.ac.createBuffer(1, len, this.ac.sampleRate), d = buf.getChannelData(0);
+        let b = 0; for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; b = (b + .04 * w) / 1.04; d[i] = b * 3.5; }
+        this.noise = buf;
+        if (this.ac.state === 'suspended') this.ac.resume();
+      },
+      src() { const s = this.ac.createBufferSource(); s.buffer = this.noise; s.loop = true; return s; },
+      env(g, t, a, peak, dur) {
+        g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      },
+      wind(dur = 3.2, peak = .55) {
+        if (!this.ac) return; const t = this.ac.currentTime;
+        const s = this.src(), bp = this.ac.createBiquadFilter(), g = this.ac.createGain();
+        bp.type = 'bandpass'; bp.Q.value = .9;
+        bp.frequency.setValueAtTime(260, t); bp.frequency.linearRampToValueAtTime(900, t + dur * .4); bp.frequency.linearRampToValueAtTime(320, t + dur);
+        g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + dur * .35); g.gain.linearRampToValueAtTime(peak * .5, t + dur * .7); g.gain.linearRampToValueAtTime(0.0001, t + dur);
+        s.connect(bp).connect(g).connect(this.out); s.start(t); s.stop(t + dur + .1);
+        const s2 = this.src(), bp2 = this.ac.createBiquadFilter(), g2 = this.ac.createGain();
+        bp2.type = 'bandpass'; bp2.Q.value = 14;
+        bp2.frequency.setValueAtTime(900, t); bp2.frequency.linearRampToValueAtTime(1500, t + dur * .45); bp2.frequency.linearRampToValueAtTime(1000, t + dur);
+        g2.gain.setValueAtTime(0.0001, t); g2.gain.linearRampToValueAtTime(peak * .5, t + dur * .45); g2.gain.linearRampToValueAtTime(0.0001, t + dur);
+        s2.connect(bp2).connect(g2).connect(this.out); s2.start(t); s2.stop(t + dur + .1);
+      },
+      whoosh(dur = .9, peak = .5) {
+        if (!this.ac) return; const t = this.ac.currentTime;
+        const s = this.src(), bp = this.ac.createBiquadFilter(), g = this.ac.createGain();
+        bp.type = 'bandpass'; bp.Q.value = 1.4;
+        bp.frequency.setValueAtTime(400, t); bp.frequency.exponentialRampToValueAtTime(2200, t + dur * .5); bp.frequency.exponentialRampToValueAtTime(500, t + dur);
+        g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + dur * .45); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        s.connect(bp).connect(g).connect(this.out); s.start(t); s.stop(t + dur + .05);
+      },
+      puf() {
+        if (!this.ac) return; const t = this.ac.currentTime;
+        const s = this.src(), lp = this.ac.createBiquadFilter(), g = this.ac.createGain();
+        lp.type = 'lowpass'; lp.frequency.setValueAtTime(1400, t); lp.frequency.exponentialRampToValueAtTime(180, t + .35);
+        this.env(g, t, .006, 1.1, .4);
+        s.connect(lp).connect(g).connect(this.out); s.start(t); s.stop(t + .45);
+        const o = this.ac.createOscillator(), og = this.ac.createGain();
+        o.type = 'sine'; o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(45, t + .25);
+        this.env(og, t, .004, .9, .3);
+        o.connect(og).connect(this.out); o.start(t); o.stop(t + .32);
+        if (navigator.vibrate) navigator.vibrate(30);
+      },
+      paper() {
+        if (!this.ac) return; const t = this.ac.currentTime;
+        const s = this.src(), hp = this.ac.createBiquadFilter(), g = this.ac.createGain();
+        hp.type = 'highpass'; hp.frequency.value = 1800;
+        g.gain.setValueAtTime(0.0001, t);
+        [0, .08, .17, .28].forEach((k, i) => { g.gain.linearRampToValueAtTime(.35 - i * .06, t + k + .015); g.gain.linearRampToValueAtTime(.03, t + k + .07); });
+        g.gain.linearRampToValueAtTime(0.0001, t + .45);
+        s.connect(hp).connect(g).connect(this.out); s.start(t); s.stop(t + .5);
+        this.whoosh(.6, .25);
+      },
+      crack() {
+        if (!this.ac) return; const t = this.ac.currentTime;
+        const s = this.src(), bp = this.ac.createBiquadFilter(), g = this.ac.createGain();
+        bp.type = 'bandpass'; bp.frequency.value = 2500; bp.Q.value = 2;
+        this.env(g, t, .002, .8, .08);
+        s.connect(bp).connect(g).connect(this.out); s.start(t); s.stop(t + .1);
+      },
+      chime() {
+        if (!this.ac) return; const t = this.ac.currentTime;
+        [[784, 0], [1175, .09], [1568, .18]].forEach(([f, d]) => {
+          const o = this.ac.createOscillator(), g = this.ac.createGain();
+          o.type = 'sine'; o.frequency.value = f; this.env(g, t + d, .01, .14, 1.4);
+          o.connect(g).connect(this.out); o.start(t + d); o.stop(t + d + 1.5);
+        });
+      },
+      tick() {
+        if (!this.ac) return; const t = this.ac.currentTime;
+        const o = this.ac.createOscillator(), g = this.ac.createGain();
+        o.type = 'triangle'; o.frequency.setValueAtTime(520, t); o.frequency.exponentialRampToValueAtTime(260, t + .12);
+        this.env(g, t, .004, .18, .14);
+        o.connect(g).connect(this.out); o.start(t); o.stop(t + .16);
+      },
+      toggle() { this.muted = !this.muted; if (this.out) this.out.gain.value = this.muted ? 0 : 1; },
+    };
 
-    // 2 · Raspadita
-    let scratchReady = false;
-    function initScratch() {
-      if (scratchReady) return;
-      scratchReady = true;
-      const c = document.getElementById('scratchCanvas');
-      const r = c.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      c.width = r.width * dpr; c.height = r.height * dpr;
-      const ctx = c.getContext('2d');
-      ctx.scale(dpr, dpr);
-      const g = ctx.createLinearGradient(0, 0, r.width, r.height);
-      g.addColorStop(0, '#5c0a16'); g.addColorStop(.4, '#9e1b2c'); g.addColorStop(.6, '#7a1220'); g.addColorStop(1, '#4a0812');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, r.width, r.height);
-      for (let i = 0; i < 1600; i++) {
-        ctx.fillStyle = `rgba(255,220,220,${Math.random() * .1})`;
-        ctx.fillRect(Math.random() * r.width, Math.random() * r.height, 1, 1);
+    /* ================= Fondo con ondas ================= */
+    const bg = $('#bg'), bctx = bg.getContext('2d');
+    function sizeBg() { const d = Math.min(devicePixelRatio || 1, 2); bg.width = innerWidth * d; bg.height = innerHeight * d; bctx.setTransform(d, 0, 0, d, 0, 0); }
+    sizeBg(); addEventListener('resize', sizeBg);
+    function drawBg(t) {
+      const w = innerWidth, h = innerHeight;
+      bctx.clearRect(0, 0, w, h);
+      const gx = w * (.5 + .25 * Math.sin(t / 5200)), gy = h * (.45 + .12 * Math.cos(t / 6100));
+      const g = bctx.createRadialGradient(gx, gy, 0, gx, gy, Math.max(w, h) * .65);
+      g.addColorStop(0, 'rgba(163, 23, 43, .32)'); g.addColorStop(1, 'rgba(163, 23, 43, 0)');
+      bctx.fillStyle = g; bctx.fillRect(0, 0, w, h);
+      for (let i = 0; i < 9; i++) {
+        bctx.beginPath();
+        const base = h * (.18 + i * .085), amp = 22 + i * 5, sp = 1 + i * .12;
+        for (let x = -10; x <= w + 10; x += 8) {
+          const y = base + Math.sin(x * .007 + t * .00035 * sp + i * 1.3) * amp + Math.sin(x * .016 - t * .0006 + i * 2.1) * 9;
+          x < 0 ? bctx.moveTo(x, y) : bctx.lineTo(x, y);
+        }
+        bctx.strokeStyle = `rgba(216, 49, 63, ${.07 + (i % 3) * .035})`;
+        bctx.lineWidth = 1.1;
+        bctx.stroke();
       }
-      ctx.fillStyle = 'rgba(243,236,225,.85)';
-      ctx.font = '700 12px "Courier Prime", monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText('RASPÁ ACÁ', r.width / 2, r.height / 2 + 4);
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = 40;
+      requestAnimationFrame(drawBg);
+    }
+    requestAnimationFrame(drawBg);
 
-      let down = false, done = false, last = null;
-      const pos = e => { const b = c.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; };
-      const cleared = () => {
-        const d = ctx.getImageData(0, 0, c.width, c.height).data;
-        let t = 0, n = 0;
-        for (let i = 3; i < d.length; i += 80) { n++; if (d[i] === 0) t++; }
-        return t / n;
+    /* ================= Sellador + puf ================= */
+    function puff(x, y, n = 12) {
+      for (let i = 0; i < n; i++) {
+        const p = document.createElement('div'); p.className = 'puff';
+        p.style.left = x + 'px'; p.style.top = y + 'px'; document.body.appendChild(p);
+        const a = (i / n) * Math.PI * 2 + Math.random() * .4, dist = 40 + Math.random() * 40;
+        p.animate([
+          { transform: 'translate(0,0) scale(.6)', opacity: .9 },
+          { transform: `translate(${Math.cos(a) * dist}px, ${Math.sin(a) * dist * .6}px) scale(${2 + Math.random() * 2})`, opacity: 0 },
+        ], { duration: 700 + Math.random() * 300, easing: 'cubic-bezier(.1,.7,.3,1)' }).finished.then(() => p.remove());
+      }
+    }
+    async function stampAt(el, onImpact) {
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const st = $('#stamperTpl').content.firstElementChild.cloneNode(true);
+      document.body.appendChild(st);
+      st.style.left = (cx - 48) + 'px';
+      st.style.top = (cy + 18 - 168) + 'px';
+      st.style.opacity = 1;
+      await st.animate([
+        { transform: `translateY(-${innerHeight * .8}px) rotate(-10deg)` },
+        { transform: 'translateY(-26px) rotate(0deg)', offset: .78 },
+        { transform: 'translateY(0) scaleY(.93)' },
+      ], { duration: 950, easing: 'cubic-bezier(.5,0,.75,0)', fill: 'forwards' }).finished;
+      sfx.puf();
+      puff(cx, cy + 10);
+      onImpact();
+      await wait(260);
+      await st.animate([
+        { transform: 'translateY(0) scaleY(.93)' },
+        { transform: 'translateY(-14px) scaleY(1)', offset: .25 },
+        { transform: `translateY(-${innerHeight * .85}px) rotate(8deg)` },
+      ], { duration: 900, easing: 'cubic-bezier(.4,0,.6,1)', fill: 'forwards' }).finished;
+      st.remove();
+    }
+
+    /* ================= Escenas ================= */
+    const wind = $('#wind');
+    function gust() { wind.classList.remove('blow'); void wind.offsetWidth; wind.classList.add('blow'); }
+
+    const envWrap = $('#envWrap'), envelope = $('#envelope'), seal = $('#seal');
+    let sealed = false;
+
+    $('#start').addEventListener('click', async () => {
+      sfx.init();
+      $('#start').classList.add('gone');
+      $('#mute').classList.add('on');
+      await wait(400);
+      // 1. El viento trae el sobre
+      sfx.wind(3.4);
+      gust();
+      envWrap.style.opacity = 1;
+      await envWrap.animate([
+        { transform: `translate(${-innerWidth * 1.2}px, ${-innerHeight * .35}px) rotate(-38deg)` },
+        { transform: `translate(${-innerWidth * .25}px, ${innerHeight * .08}px) rotate(16deg)`, offset: .38 },
+        { transform: `translate(${innerWidth * .12}px, ${-innerHeight * .05}px) rotate(-9deg)`, offset: .62 },
+        { transform: `translate(${-innerWidth * .03}px, ${innerHeight * .015}px) rotate(3deg)`, offset: .82 },
+        { transform: 'translate(0,0) rotate(0deg)' },
+      ], { duration: 2900, easing: 'cubic-bezier(.2,.65,.35,1)', fill: 'forwards' }).finished;
+      await wait(350);
+      // 2. Viene el sellador y lo sella
+      await stampAt(seal, () => {
+        seal.classList.add('on');
+        envelope.animate([{ transform: 'scale(1)' }, { transform: 'scale(.97, .95)' }, { transform: 'scale(1)' }], { duration: 300 });
+      });
+      sealed = true;
+      $('#hint').classList.add('on');
+    }, { once: true });
+
+    $('#mute').addEventListener('click', () => {
+      sfx.toggle();
+      $('#waves').style.display = sfx.muted ? 'none' : '';
+    });
+
+    /* ================= Tarjeta ================= */
+    const card = $('#card'), faces = [$('#faceA'), $('#faceB')];
+    let rot = 0;
+    const visibleFace = () => faces[(Math.round(rot / 180) % 2 + 2) % 2];
+    const hiddenFace = () => faces[(Math.round(rot / 180) % 2 + 3) % 2];
+
+    envelope.addEventListener('click', async () => {
+      if (!sealed || envelope.classList.contains('open')) return;
+      sealed = false;
+      $('#hint').classList.remove('on');
+      sfx.crack();
+      envelope.classList.add('open');
+      setTimeout(() => sfx.paper(), 150);
+      await wait(420); envelope.classList.add('flap-behind');
+      await wait(300); envelope.classList.add('rise');
+      await wait(1050);
+
+      // la carta sale volando y se da vuelta; el sobre se va
+      const lr = $('#letter').getBoundingClientRect();
+      faces[0].innerHTML = '<div class="paper"><div class="script" style="font-size:3rem">para vos</div></div>';
+      faces[0].classList.add('show');
+      faces[1].innerHTML = inviteHTML();
+      card.style.visibility = 'visible';
+      const cr = card.getBoundingClientRect();
+      const s = lr.width / cr.width;
+      const dx = (lr.left + lr.width / 2) - (cr.left + cr.width / 2);
+      const dy = (lr.top + lr.height / 2) - (cr.top + cr.height / 2);
+      $('#letter').style.visibility = 'hidden';
+
+      sfx.wind(2.2, .4); sfx.whoosh(1.1, .35); gust();
+      envWrap.animate([
+        { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+        { transform: `translate(${innerWidth * .9}px, ${innerHeight * .55}px) rotate(32deg)`, opacity: 0 },
+      ], { duration: 1300, easing: 'cubic-bezier(.5,0,.8,.6)', fill: 'forwards' });
+
+      await card.animate([
+        { transform: `translate(${dx}px, ${dy}px) scale(${s}) rotateY(0deg)` },
+        { transform: `translate(${dx * .3}px, ${dy * .3 - 70}px) scale(${s * 1.15}) rotateY(110deg) rotateZ(-7deg)`, offset: .45 },
+        { transform: 'translate(0, -12px) scale(1.02) rotateY(190deg) rotateZ(1deg)', offset: .8 },
+        { transform: 'translate(0,0) scale(1) rotateY(180deg)' },
+      ], { duration: 1700, easing: 'cubic-bezier(.3,.6,.3,1)', fill: 'forwards' }).finished;
+      rot = 180;
+      $('#scene').style.display = 'none';
+      faces[0].classList.remove('show', 'active');
+      faces[1].classList.add('show', 'active');
+      sfx.chime();
+
+      await wait(5600);
+      flipTo(questionHTML(), bindQuestion);
+    });
+
+    async function flipTo(html, bind) {
+      const next = hiddenFace(), prev = visibleFace();
+      next.innerHTML = html;
+      next.classList.remove('show');
+      prev.classList.remove('active');
+      sfx.paper();
+      const from = rot; rot += 180;
+      const anim = card.animate([
+        { transform: `rotateY(${from}deg)` },
+        { transform: `translateY(-30px) rotateY(${from + 90}deg) rotateZ(-4deg) scale(.92)` },
+        { transform: `rotateY(${rot}deg)` },
+      ], { duration: 1000, easing: 'cubic-bezier(.45,0,.25,1)', fill: 'forwards' });
+      await wait(420);
+      next.classList.add('show', 'active');
+      prev.classList.remove('show');
+      await anim.finished;
+      if (bind) bind(next);
+    }
+
+    /* ---------- Contenidos ---------- */
+    function inviteHTML() {
+      return `<div class="paper">
+        <div class="label">Estás invitada</div>
+        <div class="title">a algo <i>especial</i></div>
+        <div class="ornament"><span></span></div>
+        <div class="when">${dayLong}</div>
+        <div class="hour">${hhmm}</div>
+        <div class="timer"><i></i></div>
+      </div>`;
+    }
+    function questionHTML() {
+      return `<div class="paper">
+        <div class="label">Entonces</div>
+        <div class="title">¿Venís <i>conmigo</i>?</div>
+        <div class="choices">
+          <button class="btn" id="yes">Sí</button>
+          <button class="btn ghost" id="no">No</button>
+        </div>
+      </div>`;
+    }
+    function bindQuestion(face) {
+      const no = face.querySelector('#no'), yes = face.querySelector('#yes'), box = face.querySelector('.choices');
+      const run = e => {
+        e.preventDefault(); e.stopPropagation();
+        sfx.tick();
+        const bw = box.clientWidth - no.offsetWidth, bh = box.clientHeight - no.offsetHeight;
+        const yl = yes.offsetLeft, yt = yes.offsetTop;
+        let x, y, tries = 0;
+        do { x = Math.random() * bw; y = Math.random() * bh; tries++; }
+        while (tries < 30 && (Math.abs(x - yl) < 120 && Math.abs(y - yt) < 60 || Math.abs(x - no.offsetLeft) < 60));
+        no.style.left = x + 'px'; no.style.top = y + 'px';
       };
-      const draw = e => {
-        if (!down) return;
-        e.preventDefault();
-        const p = pos(e);
-        ctx.beginPath();
-        ctx.moveTo(...(last || p)); ctx.lineTo(...p); ctx.stroke();
-        last = p;
-        if (!done && cleared() > .45) {
-          done = true;
-          c.style.opacity = 0;
-          document.getElementById('afterScratch').classList.remove('hidden');
+      ['pointerdown', 'touchstart', 'mouseenter', 'click'].forEach(ev => no.addEventListener(ev, run, { passive: false }));
+      yes.addEventListener('click', async () => {
+        sfx.chime();
+        yes.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 400 });
+        await wait(900);
+        flipTo(dressHTML(), bindDress);
+      }, { once: true });
+    }
+
+    function dressHTML() {
+      return `<div class="paper">
+        <div class="label">Dress code</div>
+        <div class="title">¿Qué te <i>ponés</i>?</div>
+        <div class="range" id="range">
+          <div class="track"></div><div class="fill"></div>
+          <div class="dot" style="left:12px"></div><div class="dot" style="left:50%"></div><div class="dot" style="left:calc(100% - 12px)"></div>
+          <div class="thumb"></div>
+        </div>
+        <div class="range-labels"><span data-i="0">Normal</span><span data-i="1" style="text-align:center">Arreglada</span><span data-i="2">Muy arreglada</span></div>
+        <div class="pretty">De cualquier manera,<br/>siempre estás hermosa.</div>
+      </div>`;
+    }
+    function bindDress(face) {
+      const range = face.querySelector('#range'), thumb = range.querySelector('.thumb'), fill = range.querySelector('.fill');
+      const labels = [...face.querySelectorAll('.range-labels span')];
+      let done = false, dragging = false;
+      const W = () => range.clientWidth - 24;
+      const setPos = p => { thumb.style.left = (12 + p * W()) + 'px'; fill.style.width = (p * W()) + 'px'; };
+      setPos(0);
+      const choose = async i => {
+        if (done) return;
+        range.classList.add('glide'); setPos(i / 2);
+        labels.forEach((l, k) => l.classList.toggle('sel', k === i));
+        if (i === 1) {
+          done = true; sfx.chime();
+          await wait(2600);
+          flipTo(finalHTML(), bindFinal);
+        } else {
+          sfx.tick();
+          const paper = face.querySelector('.paper');
+          paper.classList.remove('shake'); void paper.offsetWidth; paper.classList.add('shake');
+          await wait(650);
+          choose(1);
         }
       };
-      c.addEventListener('pointerdown', e => { down = true; last = null; c.setPointerCapture(e.pointerId); draw(e); });
-      c.addEventListener('pointermove', draw);
-      c.addEventListener('pointerup', () => { down = false; last = null; });
-      c.addEventListener('pointercancel', () => { down = false; last = null; });
+      const fromEvent = e => {
+        const r = range.getBoundingClientRect();
+        return Math.min(1, Math.max(0, (e.clientX - r.left - 12) / W()));
+      };
+      range.addEventListener('pointerdown', e => {
+        if (done) return;
+        dragging = true; range.classList.remove('glide'); range.setPointerCapture(e.pointerId); setPos(fromEvent(e));
+      });
+      range.addEventListener('pointermove', e => { if (dragging) setPos(fromEvent(e)); });
+      const end = e => { if (!dragging) return; dragging = false; choose(Math.round(fromEvent(e) * 2)); };
+      range.addEventListener('pointerup', end);
+      range.addEventListener('pointercancel', end);
+      labels.forEach(l => l.addEventListener('click', () => choose(+l.dataset.i)));
     }
 
-    // 3 · Dress code
-    const note = document.getElementById('note');
-    const notes = ['Un poco más arreglada.', 'Exacto. Linda y cómoda.', 'Tampoco tanto.'];
-    document.querySelectorAll('.opt').forEach((o, i) => o.addEventListener('click', () => {
-      document.querySelectorAll('.opt').forEach(x => x.classList.remove('selected'));
-      o.classList.add('selected');
-      note.textContent = notes[i];
-      document.getElementById('dressNext').classList.toggle('hidden', o.dataset.ok !== '1');
-    }));
-
-    // 4 · Countdown + confirmación
-    let cdTimer;
-    function startCountdown() {
-      clearInterval(cdTimer);
+    function finalHTML() {
+      return `<div class="paper">
+        <svg class="stamp" viewBox="0 0 100 100" aria-hidden="true">
+          <defs><path id="circ" d="M50 50 m-36 0 a36 36 0 1 1 72 0 a36 36 0 1 1 -72 0"/></defs>
+          <circle cx="50" cy="50" r="46" fill="none" stroke="#a3172b" stroke-width="2"/>
+          <circle cx="50" cy="50" r="27" fill="none" stroke="#a3172b" stroke-width="1"/>
+          <text font-family="Tenor Sans, sans-serif" font-size="8.6" letter-spacing="2.6" fill="#a3172b"><textPath href="#circ">CONFIRMADO · CONFIRMADO ·</textPath></text>
+          <text x="50" y="57" text-anchor="middle" font-family="Bodoni Moda, serif" font-size="19" fill="#a3172b">${target.getDate()}.${target.getMonth() + 1}</text>
+        </svg>
+        <div class="label">Faltan</div>
+        <div class="count">
+          <div><b class="cd-d">0</b><span>días</span></div>
+          <div><b class="cd-h">0</b><span>horas</span></div>
+          <div><b class="cd-m">0</b><span>min</span></div>
+          <div><b class="cd-s">0</b><span>seg</span></div>
+        </div>
+        <div class="ornament"><span></span></div>
+        <div class="body">${cap(dias[target.getDay()])}, ${hhmm} hs.<br/>Te paso a buscar.</div>
+        <div class="confirm-area"><button class="btn" id="confirm">Confirmar</button></div>
+      </div>`;
+    }
+    function bindFinal(face) {
       const tick = () => {
         let ms = Math.max(0, target - new Date());
         const d = Math.floor(ms / 864e5); ms -= d * 864e5;
         const h = Math.floor(ms / 36e5); ms -= h * 36e5;
-        const m = Math.floor(ms / 6e4);
-        document.getElementById('cd-d').textContent = d;
-        document.getElementById('cd-h').textContent = h;
-        document.getElementById('cd-m').textContent = m;
+        const m = Math.floor(ms / 6e4); ms -= m * 6e4;
+        const s = Math.floor(ms / 1e3);
+        [['d', d], ['h', h], ['m', m], ['s', s]].forEach(([k, v]) => face.querySelector('.cd-' + k).textContent = v);
       };
-      tick(); cdTimer = setInterval(tick, 1000);
-    }
-    const confirmArea = document.getElementById('confirmArea');
-    function renderConfirm() {
-      confirmArea.innerHTML = '<button class="btn" id="confirmBtn">Confirmar</button>';
-      document.getElementById('confirmBtn').addEventListener('click', () => {
-        document.getElementById('stamp').classList.add('on');
+      tick(); setInterval(tick, 1000);
+      const btn = face.querySelector('#confirm');
+      btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        const stamp = face.querySelector('.stamp');
+        await stampAt(stamp, () => stamp.classList.add('on'));
+        sfx.chime();
         const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(CONFIG.mensajeWa)}`;
-        confirmArea.innerHTML = `<a class="btn outline" href="${wa}" target="_blank" rel="noopener">Avisarme por WhatsApp</a>`;
-      });
+        const area = face.querySelector('.confirm-area');
+        area.innerHTML = `<a class="btn ghost" href="${wa}" target="_blank" rel="noopener">Avisarme por WhatsApp</a>`;
+        area.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 600, easing: 'ease-out' });
+      }, { once: true });
     }
-    renderConfirm();
-
-    document.getElementById('again').addEventListener('click', e => {
-      e.preventDefault();
-      env.className = 'envelope';
-      steps[0].classList.remove('opening');
-      document.getElementById('stamp').classList.remove('on');
-      renderConfirm();
-      go(0);
-    });
   </script>
 </body>
 </html>
