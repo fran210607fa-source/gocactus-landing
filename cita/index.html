@@ -105,18 +105,9 @@
     }
     .hint.on { opacity: 1; animation: breathe 2.4s ease-in-out infinite; }
 
-    /* viento */
-    #wind { position: fixed; inset: 0; z-index: 12; pointer-events: none; width: 100%; height: 100%; }
-    #wind path { fill: none; stroke: rgba(244, 236, 224, .35); stroke-width: 1.2; stroke-linecap: round; stroke-dasharray: 160 1400; stroke-dashoffset: 1560; }
-    #wind.blow path { animation: gust 1.8s cubic-bezier(.4, 0, .3, 1) forwards; }
-    #wind.blow path:nth-child(2) { animation-delay: .15s; }
-    #wind.blow path:nth-child(3) { animation-delay: .35s; }
-    #wind.blow path:nth-child(4) { animation-delay: .5s; }
-    #wind.blow path:nth-child(5) { animation-delay: .7s; }
-    @keyframes gust { to { stroke-dashoffset: 0; } }
 
     /* sellador */
-    .stamper { position: fixed; z-index: 40; width: 96px; height: 168px; pointer-events: none; opacity: 0; transform-origin: 50% 100%; }
+    .stamper { position: fixed; z-index: 40; pointer-events: none; opacity: 0; transform-origin: 50% 100%; }
     .puff { position: fixed; z-index: 41; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; pointer-events: none; background: rgba(255, 236, 230, .55); filter: blur(3px); }
 
     /* ---------- Tarjeta que gira ---------- */
@@ -212,8 +203,15 @@
     .count b { display: block; font: 400 2.5rem/1 var(--serif); color: var(--red); font-variant-numeric: tabular-nums; }
     .count span { font: 400 .58rem var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
     .body { font: 400 1.2rem/1.5 var(--serif); color: #4e2a2f; }
-    .stamp { position: absolute; right: 26px; top: 26px; width: 92px; height: 92px; pointer-events: none; opacity: 0 !important; }
-    .stamp.on { opacity: .92 !important; transform: rotate(-14deg) !important; }
+    .face .paper > .stamp {
+      position: absolute; right: 20px; top: 20px; width: 104px; height: 104px; pointer-events: none;
+      opacity: 0; transform: rotate(var(--rot, -12deg)); mix-blend-mode: multiply;
+    }
+    .face.show .paper > .stamp { animation: none; }
+    .stamp-shadow {
+      position: fixed; z-index: 39; height: 22px; border-radius: 50%; pointer-events: none; opacity: 0;
+      background: radial-gradient(closest-side, rgba(20, 0, 4, .55), transparent);
+    }
     .confirm-area { min-height: 52px; }
     .confirm-area .btn { white-space: nowrap; padding: 16px 20px; letter-spacing: .16em; }
 
@@ -237,14 +235,6 @@
       <div class="label tap">Tocá la pantalla</div>
     </div>
   </div>
-
-  <svg id="wind" viewBox="0 0 400 800" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M-40 220 C 60 180, 140 260, 240 210 S 380 170, 460 230"/>
-    <path d="M-40 330 C 80 300, 160 370, 260 320 S 400 300, 460 340"/>
-    <path d="M-40 420 C 50 400, 150 450, 250 410 S 390 380, 460 420"/>
-    <path d="M-40 520 C 70 490, 170 560, 270 510 S 400 480, 460 520"/>
-    <path d="M-40 610 C 60 590, 140 640, 240 600 S 380 570, 460 610"/>
-  </svg>
 
   <div id="scene">
     <div class="env-wrap" id="envWrap">
@@ -294,6 +284,24 @@
       <rect x="24" y="84" width="32" height="9" rx="2" fill="url(#brass)"/>
       <path d="M20 93 h40 l5 30 a3 3 0 0 1 -3 3 h-44 a3 3 0 0 1 -3 -3 z" fill="url(#brass)"/>
       <rect x="14" y="124" width="52" height="3" rx="1.5" fill="#4a3415"/>
+    </svg>
+  </template>
+
+  <template id="rubberTpl">
+    <svg class="stamper" viewBox="0 0 80 140" aria-hidden="true">
+      <defs>
+        <linearGradient id="rwood" x1="0" x2="1"><stop offset="0" stop-color="#2b120c"/><stop offset=".35" stop-color="#6b3622"/><stop offset=".55" stop-color="#7d4229"/><stop offset="1" stop-color="#231009"/></linearGradient>
+        <linearGradient id="rblock" x1="0" x2="1"><stop offset="0" stop-color="#3a1a10"/><stop offset=".3" stop-color="#6e3a24"/><stop offset=".7" stop-color="#5a2d1b"/><stop offset="1" stop-color="#2a120a"/></linearGradient>
+        <radialGradient id="knob" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#8a4c30"/><stop offset=".6" stop-color="#4a2214"/><stop offset="1" stop-color="#22100a"/></radialGradient>
+      </defs>
+      <ellipse cx="40" cy="15" rx="15" ry="13" fill="url(#knob)"/>
+      <ellipse cx="35" cy="10" rx="5" ry="3" fill="#fff" opacity=".18"/>
+      <path d="M34 26 C 33 38, 31 48, 30 58 L 50 58 C 49 48, 47 38, 46 26 Z" fill="url(#rwood)"/>
+      <rect x="8" y="58" width="64" height="40" rx="3" fill="url(#rblock)"/>
+      <rect x="8" y="58" width="64" height="3" rx="1.5" fill="#fff" opacity=".12"/>
+      <path d="M14 66 C 30 64, 48 70, 66 66 M14 78 C 32 76, 50 82, 66 78 M14 90 C 28 88, 46 93, 66 89" stroke="#1e0b06" stroke-opacity=".35" stroke-width=".7" fill="none"/>
+      <rect x="10" y="98" width="60" height="5" fill="#d8cdbb"/>
+      <rect x="11" y="103" width="58" height="7" rx="1" fill="#8a1324"/>
     </svg>
   </template>
 
@@ -365,16 +373,37 @@
         o.connect(og).connect(this.out); o.start(t); o.stop(t + .32);
         if (navigator.vibrate) navigator.vibrate(30);
       },
-      paper() {
-        if (!this.ac) return; const t = this.ac.currentTime;
-        const s = this.src(), hp = this.ac.createBiquadFilter(), g = this.ac.createGain();
-        hp.type = 'highpass'; hp.frequency.value = 1800;
-        g.gain.setValueAtTime(0.0001, t);
-        [0, .08, .17, .28].forEach((k, i) => { g.gain.linearRampToValueAtTime(.35 - i * .06, t + k + .015); g.gain.linearRampToValueAtTime(.03, t + k + .07); });
-        g.gain.linearRampToValueAtTime(0.0001, t + .45);
-        s.connect(hp).connect(g).connect(this.out); s.start(t); s.stop(t + .5);
-        this.whoosh(.6, .25);
+      // papel: crujidos cortos al azar sobre un roce suave
+      crinkle(dur = .7, density = 1, peak = .6, hp = 900) {
+        if (!this.ac) return; const t = this.ac.currentTime, sr = this.ac.sampleRate;
+        const n = Math.floor(sr * dur), buf = this.ac.createBuffer(1, n, sr), d = buf.getChannelData(0);
+        for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * .07 * Math.pow(Math.sin(Math.PI * i / n), 1.5);
+        let k = 0;
+        while (k < n) {
+          const e = Math.sin(Math.PI * k / n);
+          k += Math.floor(sr * (.002 + Math.random() * .02) / (.25 + e * density));
+          const amp = (.15 + Math.random() * .85) * e, len = Math.floor(sr * (.0005 + Math.random() * .004));
+          for (let j = 0; j < len && k + j < n; j++) d[k + j] += (Math.random() * 2 - 1) * amp * Math.exp(-j / (len * .3));
+        }
+        const s = this.ac.createBufferSource(); s.buffer = buf;
+        const f = this.ac.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = hp;
+        const pk = this.ac.createBiquadFilter(); pk.type = 'peaking'; pk.frequency.value = 3600; pk.gain.value = 5;
+        const g = this.ac.createGain(); g.gain.value = peak;
+        s.connect(f).connect(pk).connect(g).connect(this.out); s.start(t);
       },
+      // solapa que se dobla
+      fold() {
+        if (!this.ac) return; const t = this.ac.currentTime;
+        const s = this.src(), lp = this.ac.createBiquadFilter(), g = this.ac.createGain();
+        lp.type = 'lowpass'; lp.frequency.setValueAtTime(500, t); lp.frequency.linearRampToValueAtTime(1600, t + .3);
+        g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(.45, t + .18); g.gain.exponentialRampToValueAtTime(0.0001, t + .55);
+        s.connect(lp).connect(g).connect(this.out); s.start(t); s.stop(t + .6);
+        this.crinkle(.55, 1.4, .55);
+      },
+      // hoja que se desliza fuera del sobre
+      slide() { this.crinkle(.9, .5, .4, 1400); this.whoosh(.8, .18); },
+      // la tarjeta que gira
+      paper() { this.crinkle(.45, .8, .4); this.whoosh(.6, .22); },
       crack() {
         if (!this.ac) return; const t = this.ac.currentTime;
         const s = this.src(), bp = this.ac.createBiquadFilter(), g = this.ac.createGain();
@@ -438,35 +467,40 @@
         ], { duration: 700 + Math.random() * 300, easing: 'cubic-bezier(.1,.7,.3,1)' }).finished.then(() => p.remove());
       }
     }
-    async function stampAt(el, onImpact) {
+    async function stampAt(el, onImpact, opts = {}) {
+      const o = { tpl: '#stamperTpl', w: 96, h: 168, contact: 150, smoke: true, ...opts };
       const r = el.getBoundingClientRect();
       const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-      const st = $('#stamperTpl').content.firstElementChild.cloneNode(true);
-      document.body.appendChild(st);
-      st.style.left = (cx - 48) + 'px';
-      st.style.top = (cy + 18 - 168) + 'px';
+      const st = $(o.tpl).content.firstElementChild.cloneNode(true);
+      st.style.width = o.w + 'px'; st.style.height = o.h + 'px';
+      st.style.left = (cx - o.w / 2) + 'px';
+      st.style.top = (cy - o.contact) + 'px';
+      const sh = document.createElement('div'); sh.className = 'stamp-shadow';
+      sh.style.width = (o.w * .95) + 'px'; sh.style.left = (cx - o.w * .475) + 'px'; sh.style.top = (cy - 11) + 'px';
+      document.body.append(sh, st);
       st.style.opacity = 1;
+      const down = { duration: 950, easing: 'cubic-bezier(.5,0,.75,0)', fill: 'forwards' };
+      sh.animate([{ opacity: 0, transform: 'scale(2.2)' }, { opacity: .8, transform: 'scale(1)' }], down);
       await st.animate([
         { transform: `translateY(-${innerHeight * .8}px) rotate(-10deg)` },
         { transform: 'translateY(-26px) rotate(0deg)', offset: .78 },
         { transform: 'translateY(0) scaleY(.93)' },
-      ], { duration: 950, easing: 'cubic-bezier(.5,0,.75,0)', fill: 'forwards' }).finished;
+      ], down).finished;
       sfx.puf();
-      puff(cx, cy + 10);
+      if (o.smoke) puff(cx, cy + 10);
       onImpact();
-      await wait(260);
+      await wait(o.smoke ? 260 : 380);
+      const up = { duration: 900, easing: 'cubic-bezier(.4,0,.6,1)', fill: 'forwards' };
+      sh.animate([{ opacity: .8, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(2.2)' }], up);
       await st.animate([
         { transform: 'translateY(0) scaleY(.93)' },
         { transform: 'translateY(-14px) scaleY(1)', offset: .25 },
         { transform: `translateY(-${innerHeight * .85}px) rotate(8deg)` },
-      ], { duration: 900, easing: 'cubic-bezier(.4,0,.6,1)', fill: 'forwards' }).finished;
-      st.remove();
+      ], up).finished;
+      st.remove(); sh.remove();
     }
 
     /* ================= Escenas ================= */
-    const wind = $('#wind');
-    function gust() { wind.classList.remove('blow'); void wind.offsetWidth; wind.classList.add('blow'); }
-
     const envWrap = $('#envWrap'), envelope = $('#envelope'), seal = $('#seal');
     let sealed = false;
 
@@ -477,7 +511,6 @@
       await wait(400);
       // 1. El viento trae el sobre
       sfx.wind(3.4);
-      gust();
       envWrap.style.opacity = 1;
       await envWrap.animate([
         { transform: `translate(${-innerWidth * 1.2}px, ${-innerHeight * .35}px) rotate(-38deg)` },
@@ -513,9 +546,9 @@
       $('#hint').classList.remove('on');
       sfx.crack();
       envelope.classList.add('open');
-      setTimeout(() => sfx.paper(), 150);
+      setTimeout(() => sfx.fold(), 120);
       await wait(420); envelope.classList.add('flap-behind');
-      await wait(300); envelope.classList.add('rise');
+      await wait(300); envelope.classList.add('rise'); sfx.slide();
       await wait(1050);
 
       // la carta sale volando y se da vuelta; el sobre se va
@@ -530,7 +563,7 @@
       const dy = (lr.top + lr.height / 2) - (cr.top + cr.height / 2);
       $('#letter').style.visibility = 'hidden';
 
-      sfx.wind(2.2, .4); sfx.whoosh(1.1, .35); gust();
+      sfx.wind(2.2, .4); sfx.whoosh(1.1, .35);
       envWrap.animate([
         { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
         { transform: `translate(${innerWidth * .9}px, ${innerHeight * .55}px) rotate(32deg)`, opacity: 0 },
@@ -666,12 +699,28 @@
 
     function finalHTML() {
       return `<div class="paper">
-        <svg class="stamp" viewBox="0 0 100 100" aria-hidden="true">
-          <defs><path id="circ" d="M50 50 m-36 0 a36 36 0 1 1 72 0 a36 36 0 1 1 -72 0"/></defs>
-          <circle cx="50" cy="50" r="46" fill="none" stroke="#a3172b" stroke-width="2"/>
-          <circle cx="50" cy="50" r="27" fill="none" stroke="#a3172b" stroke-width="1"/>
-          <text font-family="Tenor Sans, sans-serif" font-size="8.6" letter-spacing="2.6" fill="#a3172b"><textPath href="#circ">CONFIRMADO · CONFIRMADO ·</textPath></text>
-          <text x="50" y="57" text-anchor="middle" font-family="Bodoni Moda, serif" font-size="19" fill="#a3172b">${target.getDate()}.${target.getMonth() + 1}</text>
+        <svg class="stamp" viewBox="0 0 120 120" aria-hidden="true">
+          <defs>
+            <filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+              <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" result="n1"/>
+              <feDisplacementMap in="SourceGraphic" in2="n1" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+              <feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="11" result="n2"/>
+              <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -2.4 0 0 0 2.05" result="blot"/>
+              <feComposite in="rough" in2="blot" operator="in" result="inked"/>
+              <feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="1" seed="7" result="n3"/>
+              <feColorMatrix in="n3" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -4 0 0 0 3.15" result="grain"/>
+              <feComposite in="inked" in2="grain" operator="in"/>
+            </filter>
+            <path id="circ" d="M60 60 m-42 0 a42 42 0 1 1 84 0 a42 42 0 1 1 -84 0"/>
+          </defs>
+          <g filter="url(#ink)" fill="#9b1428" stroke="#9b1428">
+            <circle cx="60" cy="60" r="55" fill="none" stroke-width="3.4"/>
+            <circle cx="60" cy="60" r="50.5" fill="none" stroke-width="1.1"/>
+            <circle cx="60" cy="60" r="32" fill="none" stroke-width="1.6"/>
+            <text font-family="Tenor Sans, sans-serif" font-size="10" letter-spacing="2.2" stroke="none"><textPath href="#circ">CONFIRMADO • CONFIRMADO •</textPath></text>
+            <text x="60" y="61" text-anchor="middle" font-family="Bodoni Moda, serif" font-weight="600" font-size="19" stroke="none">${target.getDate()}.${target.getMonth() + 1}</text>
+            <text x="60" y="74" text-anchor="middle" font-family="Tenor Sans, sans-serif" font-size="7.6" letter-spacing="1.4" stroke="none">${hhmm} HS</text>
+          </g>
         </svg>
         <div class="label">Faltan</div>
         <div class="count">
@@ -699,7 +748,13 @@
       btn.addEventListener('click', async () => {
         btn.disabled = true;
         const stamp = face.querySelector('.stamp');
-        await stampAt(stamp, () => stamp.classList.add('on'));
+        const rotDeg = (-6 - Math.random() * 12).toFixed(1);
+        stamp.style.setProperty('--rot', rotDeg + 'deg');
+        await stampAt(stamp, () => {
+          stamp.animate([{ opacity: 0, transform: `rotate(${rotDeg}deg) scale(1.04)` }, { opacity: .93, transform: `rotate(${rotDeg}deg) scale(1)` }],
+            { duration: 220, easing: 'ease-out', fill: 'forwards' });
+          face.querySelector('.paper').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 180 });
+        }, { tpl: '#rubberTpl', w: 120, h: 210, contact: 162, smoke: false });
         sfx.chime();
         const wa = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(CONFIG.mensajeWa)}`;
         const area = face.querySelector('.confirm-area');
